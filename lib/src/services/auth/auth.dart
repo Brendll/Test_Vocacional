@@ -71,20 +71,8 @@ class AuthService with ChangeNotifier {
       );
 
       User user = authResult.user!;
-
-      DocumentSnapshot userDoc =
-          await _db.collection('users').doc(user.uid).get();
-
-      if (userDoc['TypeUsers'] == 'TestUser') {
-        userDoc = await _db.collection('TestUser').doc(user.uid).get();
-        _user.setter(userDoc);
-        notifyListeners();
-        await updateUserData(user);
-        return user;
-      } else {
-        signOut();
-        return null;
-      }
+      notifyListeners();
+      return user;
     } catch (e) {
       _status = AuthStatus.Unauthenticated;
       notifyListeners();
@@ -92,10 +80,42 @@ class AuthService with ChangeNotifier {
     }
   }
 
+  Future<bool> checkUserExistAndRedirect(User user) async {
+    DocumentSnapshot userDoc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .get();
+
+    if (userDoc.exists && userDoc['TypeUsers'] == 'TestUser') {
+      // El documento del usuario existe, inicia sesión normalmente
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+// Después de que el usuario inicie sesión o se registre correctamente
+  Future<bool> checkUserDataAndRedirect(User user) async {
+    DocumentSnapshot userDoc = await FirebaseFirestore.instance
+        .collection('TestUser')
+        .doc(user.uid)
+        .get();
+
+    if (userDoc.exists) {
+      // El documento del usuario existe, inicia sesión normalmente
+      // (puedes implementar tu lógica aquí)
+      debugPrint('Documento del usuario encontrado en Firestore');
+      return true;
+    } else {
+      debugPrint('Documento del usuario no encontrado en Firestore');
+      return false;
+    }
+  }
+
   /// [signOut] - Método para cerrar la sesión del usuario.
   /// Actualiza el estado de autenticación y notifica a los oyentes sobre el cambio de estado.
-  void signOut() {
-    _auth.signOut();
+  Future<void> signOut() async {
+    await _auth.signOut();
     _status = AuthStatus.Unauthenticated;
     notifyListeners();
   }
@@ -120,6 +140,19 @@ class AuthService with ChangeNotifier {
       _status = AuthStatus.Unauthenticated;
       notifyListeners();
       return null;
+    }
+  }
+
+  /// [recoverPassword] - Método para recuperar la contraseña del usuario.
+  /// Envía un correo electrónico de restablecimiento de contraseña al correo electrónico proporcionado.
+  Future<void> recoverPassword(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      // Manejar cualquier error que pueda ocurrir al enviar el correo electrónico
+      print(
+          'Error al enviar correo electrónico de recuperación de contraseña: $e');
+      throw e;
     }
   }
 

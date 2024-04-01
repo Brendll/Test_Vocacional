@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test_vocacional_1/src/models/app/app_model.dart';
 import 'package:flutter_test_vocacional_1/src/models/user/user_model.dart';
+import 'package:flutter_test_vocacional_1/src/routes/router.dart';
 import 'package:flutter_test_vocacional_1/src/services/auth/auth.dart';
 import 'package:provider/provider.dart';
 
@@ -15,4 +16,7 @@ class BaseController {
 
   //services
   AuthService authService = _mainContext.read();
+
+  //Router
+  Routes routes = _mainContext.read();
 }

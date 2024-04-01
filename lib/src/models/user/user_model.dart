@@ -12,6 +12,8 @@ class UserModel with ChangeNotifier {
   UserModelStatus _status = UserModelStatus.Ended;
   String _errorCode = '';
   String _errorMessage = '';
+  bool _error = false;
+
   String _correo = '';
   String _password = '';
   String _nombre = '';
@@ -34,7 +36,24 @@ class UserModel with ChangeNotifier {
   String get errorMessage => _errorMessage;
   UserModelStatus get status => _status;
 
+  bool get error => _error;
   // Setters
+
+  set error(bool value) {
+    _error = value;
+    notifyListeners();
+  }
+
+  set errorMessage(String value) {
+    _errorMessage = value;
+    notifyListeners();
+  }
+
+  set errorCode(String value) {
+    _errorCode = value;
+    notifyListeners();
+  }
+
   set correo(String value) {
     _correo = value;
     notifyListeners();
