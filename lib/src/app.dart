@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //controller.init(context);
     return MultiProvider(
         providers: [
           ChangeNotifierProvider<AppModel>(create: (context) => AppModel()),
@@ -71,6 +72,7 @@ class MyApp extends StatelessWidget {
             ),
             initialRoute: Routes.initialRoute,
             onGenerateRoute: Routes.generateRoute,
+            //routes: Routes.routes,
           );
         }));
   }

@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_test_vocacional_1/src/controllers/login_controller.dart';
 import 'package:flutter_test_vocacional_1/src/routes/router.dart';
 import 'package:flutter_test_vocacional_1/src/views/util/bar/components/btn_bar_component.dart';
 
 class NavigationBarMenu extends StatelessWidget {
-  const NavigationBarMenu({Key? key}) : super(key: key);
+  const NavigationBarMenu({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        //espacio
-        const SizedBox(
-          width: 30,
+        const Expanded(
+          flex: 4,
+          child:
+              //espacio
+              SizedBox(
+            width: 60,
+            height: 60,
+          ),
         ),
 
         //botón de inicio
-        Expanded(
+        const Expanded(
           flex: 2,
           child: BtnBarComponent(
             iconData: Icons.home,
@@ -27,7 +33,7 @@ class NavigationBarMenu extends StatelessWidget {
         ),
 
         //botón de test
-        Expanded(
+        const Expanded(
           flex: 2,
           child: BtnBarComponent(
             routeName: 'test',
@@ -37,7 +43,7 @@ class NavigationBarMenu extends StatelessWidget {
         ),
 
         //botón de acerca de
-        Expanded(
+        const Expanded(
           flex: 2,
           child: BtnBarComponent(
             routeName: 'about',
@@ -48,7 +54,7 @@ class NavigationBarMenu extends StatelessWidget {
 
         //Cerrar Sesión
         Expanded(
-          flex: 4,
+          flex: 2,
           child: Routes.buildAuthenticatedScreen(
             BtnBarComponent(
               onPressed: () {

@@ -40,16 +40,25 @@ class _SwiperHomeState extends State<SwiperHome> {
           return Image.network(
             images[index],
             fit: BoxFit.fill,
+            opacity: const AlwaysStoppedAnimation(1.0),
           );
         },
         itemCount: images.length,
         pagination: const SwiperPagination(),
         control: const SwiperControl(),
         containerHeight: 450,
-        duration: 5000,
-        autoplay: true,
+        duration: 10000,
         loop: true,
-        index: images.length - 1,
+        curve: Curves.fastOutSlowIn,
+        autoplayDisableOnInteraction: true,
+        autoplayDelay: 10000,
+        physics: const ScrollPhysics(),
+
+        axisDirection: AxisDirection.left,
+        allowImplicitScrolling: true,
+        scrollDirection: Axis.horizontal,
+        //layout: SwiperLayout.TINDER,
+        autoplay: true,
         onTap: (index) =>
             Navigator.pushNamed(context, 'carreras', arguments: index),
       ),

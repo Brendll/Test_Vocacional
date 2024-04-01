@@ -23,7 +23,7 @@ class TitleComponent extends StatelessWidget {
               style: TextStyle(
                 fontFamily: GoogleFonts.castoro().fontFamily,
                 color: Colors.black,
-                //fontSize: 12,
+                fontSize: 24,
               ),
               maxLines: 1,
               maxFontSize: 24,
@@ -38,7 +38,7 @@ class TitleComponent extends StatelessWidget {
                 fontFamily: GoogleFonts.castoro().fontFamily,
                 color: Colors.black,
 
-                //fontSize: 15,
+                fontSize: 30,
                 // fontWeight: FontWeight.bold, // Agregando negrita
               ),
               maxLines: 1,
@@ -50,11 +50,11 @@ class TitleComponent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 AutoSizeText(
-                  "Créditos",
+                  "C.B.T.I.S 61",
                   style: TextStyle(
                     fontFamily: GoogleFonts.castoro().fontFamily,
                     color: Colors.black,
-                    //fontSize: 9,
+                    fontSize: 18,
                   ),
                   maxLines: 1,
                   maxFontSize: 18,

@@ -8,8 +8,16 @@ enum AppModelStatus {
 
 class AppModel with ChangeNotifier {
   AppModelStatus _status = AppModelStatus.Ended;
-  String _errorCode = '';
-  String _errorMessage = '';
+  final String _errorCode = '';
+  final String _errorMessage = '';
+  String _rutaCarreras = '/carreras/';
+
+  String get rutaCarreras => _rutaCarreras;
+
+  set rutaCarreras(String value) {
+    _rutaCarreras = value;
+    notifyListeners();
+  }
 
   String get errorCode => _errorCode;
   String get errorMessage => _errorMessage;

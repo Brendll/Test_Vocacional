@@ -150,7 +150,7 @@ class AuthService with ChangeNotifier {
       await _auth.sendPasswordResetEmail(email: email);
     } catch (e) {
       // Manejar cualquier error que pueda ocurrir al enviar el correo electrónico
-      print(
+      debugPrint(
           'Error al enviar correo electrónico de recuperación de contraseña: $e');
       throw e;
     }

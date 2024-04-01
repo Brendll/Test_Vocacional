@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test_vocacional_1/src/controllers/login_controller.dart';
 import 'package:flutter_test_vocacional_1/src/services/auth/auth.dart';
 import 'package:flutter_test_vocacional_1/src/util/responsive/responsive_design.dart';
+import 'package:flutter_test_vocacional_1/src/views/home/components/dgti.dart';
 import 'package:flutter_test_vocacional_1/src/views/home/layouts/swiper_home.dart';
 import 'package:flutter_test_vocacional_1/src/views/util/bar/components/title_component.dart';
 import 'package:flutter_test_vocacional_1/src/views/util/bar/layouts/navigation_bar_menu.dart';
@@ -30,9 +31,9 @@ class HomeView extends StatelessWidget {
       //Desktop
       context.read<ViewMenu>().widgetBar = const Row(
         children: [
-          Expanded(flex: 3, child: SizedBox(child: TitleComponent())),
+          Expanded(flex: 4, child: SizedBox(child: TitleComponent())),
           Expanded(
-            flex: 7,
+            flex: 8,
             child: SizedBox(child: NavigationBarMenu()),
           )
         ],
@@ -43,7 +44,7 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       drawer: context.watch<ViewMenu>().widgetDrawer,
       appBar: AppBar(
-        toolbarHeight: 50,
+        toolbarHeight: 60,
         backgroundColor: Colores.colorAppBar,
         title: TitleBar(),
         centerTitle: true,
@@ -63,6 +64,7 @@ class HomeView extends StatelessWidget {
       ),
       body: ListView(
         children: <Widget>[
+          Dgti(),
           SwiperHome(),
           const SizedBox(height: 50),
           Column(

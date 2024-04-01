@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_test_vocacional_1/src/services/auth/auth.dart';
-import 'package:flutter_test_vocacional_1/src/views/Register/register_view.dart';
 import 'package:flutter_test_vocacional_1/src/views/about/about_view.dart';
 import 'package:flutter_test_vocacional_1/src/views/carreras/carreras_view.dart';
 import 'package:flutter_test_vocacional_1/src/views/continue_register/continue_register_view.dart';
@@ -14,34 +13,39 @@ import 'dart:js' as js;
 import 'package:provider/provider.dart';
 
 class Routes {
+  var ruta = '';
   static const String initialRoute = '/';
+
+  static Map<String, Widget Function(BuildContext)> routes = {
+    initialRoute: (_) => const HomeView(),
+    '/about': (_) => const AboutView(),
+    '/test': (_) => const FormTestView(),
+    '/login': (_) => LoginView(),
+    //'/register': (_) => const RegisterView(),
+    '/continue-register/': (_) => const ContinueRegisterView(),
+    '/carreras': (_) => const CarrerasView(),
+  };
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (_) => const HomeView());
       case '/about':
-        return MaterialPageRoute(builder: (_) => AboutView());
+        return MaterialPageRoute(builder: (_) => const AboutView());
       case '/test':
-        return _checkAuthAndNavigate(FormTestView());
+        return _checkAuthAndNavigate(const FormTestView());
       case '/login':
         return _checkAuthAndNavigate(LoginView());
-      case '/register':
-        return MaterialPageRoute(builder: (_) => const RegisterView());
+      //case '/register':
+      //return MaterialPageRoute(builder: (_) => const RegisterView());
       case '/continue-register/':
         return _checkAuthAndNavigate(
           const ContinueRegisterView(),
         );
-      case '/carreras': // Define la ruta '/carreras'
-        // Si se proporcionan argumentos, convierte el índice a un entero
-        final arguments = settings.arguments;
-        int initialPageIndex = 0; // Valor predeterminado del índice inicial
-        if (arguments is int) {
-          initialPageIndex = arguments;
-        }
+      case '/carreras':
         // Devuelve una ruta de material con CarrerasView como su constructor
         return MaterialPageRoute(
-          builder: (_) => CarrerasView(initialPageIndex: initialPageIndex),
+          builder: (_) => const CarrerasView(),
         );
 
       default:
@@ -80,8 +84,13 @@ class Routes {
     } else {
       Navigator.of(context).pushNamed('/$routeName');
       // Actualizar la URL en la barra de direcciones del navegador
-      js.context.callMethod('history.pushState', ['/$routeName']);
-      js.context.callMethod('history.replaceState', ['/$routeName']);
+      try {
+        js.context.callMethod('history.pushState', ['/$routeName']);
+        js.context.callMethod('history.replaceState', ['/$routeName']);
+      } catch (e) {
+        throw Exception(
+            'Error al actualizar la URL en la barra de direcciones del navegador: $e');
+      }
     }
   }
 
@@ -92,7 +101,7 @@ class Routes {
       builder: (context) {
         switch (context.watch<AuthService>().status) {
           case AuthStatus.Uninitialized:
-            return HomeView();
+            return const HomeView();
           case AuthStatus.Authenticating:
             // Muestra un indicador de carga mientras se determina el estado de autenticación
             return _buildLoadingScreen();
