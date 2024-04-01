@@ -38,11 +38,19 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             showSemanticsDebugger: false,
             theme: ThemeData(
-              fontFamily: GoogleFonts.montserrat().fontFamily,
               brightness: Brightness.light,
               primaryColor: const Color.fromARGB(0, 214, 219, 137),
               colorScheme: const ColorScheme.light(
-                  primary: Color.fromARGB(0, 192, 32, 32)),
+                primary: Color.fromARGB(0, 192, 32, 32),
+              ),
+              appBarTheme: AppBarTheme(
+                titleTextStyle: GoogleFonts
+                    .castoro(), // Establecer fuente Castoro para el título del AppBar
+              ),
+              textTheme: TextTheme(
+                bodyMedium: GoogleFonts
+                    .oswald(), // Establecer fuente Oswald para el cuerpo de la aplicación
+              ),
             ),
             initialRoute: Routes.initialRoute,
             onGenerateRoute: Routes.generateRoute,

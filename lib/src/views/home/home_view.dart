@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test_vocacional_1/src/controllers/login_controller.dart';
 import 'package:flutter_test_vocacional_1/src/services/auth/auth.dart';
 import 'package:flutter_test_vocacional_1/src/views/home/layouts/swiper_home.dart';
-import 'package:flutter_test_vocacional_1/src/views/home/layouts/title_bar.dart';
+import 'package:flutter_test_vocacional_1/src/views/util/Bar/title_bar.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
