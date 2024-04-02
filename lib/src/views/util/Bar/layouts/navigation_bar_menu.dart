@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'package:flutter_test_vocacional_1/src/controllers/login_controller.dart';
 import 'package:flutter_test_vocacional_1/src/routes/router.dart';
@@ -24,7 +25,7 @@ class NavigationBarMenu extends StatelessWidget {
 
         //botón de inicio
         const Expanded(
-          flex: 2,
+          flex: 3,
           child: BtnBarComponent(
             iconData: Icons.home,
             routeName: '',
@@ -34,7 +35,7 @@ class NavigationBarMenu extends StatelessWidget {
 
         //botón de test
         const Expanded(
-          flex: 2,
+          flex: 3,
           child: BtnBarComponent(
             routeName: 'test',
             iconData: Icons.text_snippet_outlined,
@@ -44,7 +45,7 @@ class NavigationBarMenu extends StatelessWidget {
 
         //botón de acerca de
         const Expanded(
-          flex: 2,
+          flex: 3,
           child: BtnBarComponent(
             routeName: 'about',
             iconData: Icons.info,
@@ -54,7 +55,7 @@ class NavigationBarMenu extends StatelessWidget {
 
         //Cerrar Sesión
         Expanded(
-          flex: 2,
+          flex: 3,
           child: Routes.buildAuthenticatedScreen(
             BtnBarComponent(
               onPressed: () {

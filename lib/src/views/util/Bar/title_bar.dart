@@ -10,7 +10,7 @@ class TitleBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.only(left: 10),
       child: context.watch<ViewMenu>().widgetBar,
     );
   }

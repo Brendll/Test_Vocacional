@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+import 'dart:js' as js;
 
+import 'package:flutter/material.dart';
 import 'package:flutter_test_vocacional_1/src/services/auth/auth.dart';
 import 'package:flutter_test_vocacional_1/src/views/about/about_view.dart';
 import 'package:flutter_test_vocacional_1/src/views/carreras/carreras_view.dart';
@@ -8,47 +9,60 @@ import 'package:flutter_test_vocacional_1/src/views/form_test/form_test_view.dar
 import 'package:flutter_test_vocacional_1/src/views/home/home_view.dart';
 import 'package:flutter_test_vocacional_1/src/views/login/login_view.dart';
 import 'package:flutter_test_vocacional_1/src/views/util/bar/components/btn_login_and_register_component.dart';
-import 'dart:js' as js;
-
 import 'package:provider/provider.dart';
 
+/// Esta clase es la clase encargada de manejar las rutas de la aplicación
+///
+/// [Routes] es una clase que extiende de BaseController
+/// Uno de los parametros de la clase es la ruta inicial de la aplicación es
+/// [ruta] que es una cadena de texto que representa la ruta inicial de la
+/// aplicación.
 class Routes {
-  var ruta = '';
+  /// La ruta inicial de la aplicación es [ruta] que es una cadena de texto que
+  /// representa la ruta inicial de la aplicación.
+  String ruta = '';
+
+  /// La ruta inicial de la aplicación es [initialRoute] que es una cadena de
+  /// texto
   static const String initialRoute = '/';
 
+  /// La ruta inicial de la aplicación es [initialRoute] que es una cadena de
   static Map<String, Widget Function(BuildContext)> routes = {
-    initialRoute: (_) => const HomeView(),
+    initialRoute: (_) => HomeView(),
     '/about': (_) => const AboutView(),
     '/test': (_) => const FormTestView(),
     '/login': (_) => LoginView(),
     //'/register': (_) => const RegisterView(),
     '/continue-register/': (_) => const ContinueRegisterView(),
-    '/carreras': (_) => const CarrerasView(),
+    '/carreras': (_) => CarrerasView(),
   };
 
+  /// [generateRoute] es una función que se encarga de manejar las rutas de la
+  /// aplicación
+  /// @param RouteSettings settings es una variable que contiene la
+  /// configuración de la ruta
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (_) => const HomeView());
+        return MaterialPageRoute(builder: (_) => HomeView());
       case '/about':
         return MaterialPageRoute(builder: (_) => const AboutView());
       case '/test':
         return _checkAuthAndNavigate(const FormTestView());
       case '/login':
-        return _checkAuthAndNavigate(LoginView());
+        return MaterialPageRoute(builder: (_) => LoginView());
       //case '/register':
       //return MaterialPageRoute(builder: (_) => const RegisterView());
-      case '/continue-register/':
+      case '/continue-register':
         return _checkAuthAndNavigate(
           const ContinueRegisterView(),
         );
       case '/carreras':
         // Devuelve una ruta de material con CarrerasView como su constructor
         return MaterialPageRoute(
-          builder: (_) => const CarrerasView(),
+          builder: (_) => CarrerasView(),
         );
-
-      default:
+      case '/error-404':
         return MaterialPageRoute(
           builder: (_) => Scaffold(
             appBar: AppBar(
@@ -59,21 +73,51 @@ class Routes {
             ),
           ),
         );
+      default:
+        return MaterialPageRoute(
+          builder: (_) => Scaffold(
+            appBar: AppBar(
+              title: const Text('Error 404'),
+            ),
+            body: Builder(
+              builder: (context) {
+                Future.delayed(const Duration(seconds: 5), () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Ruta no encontrada: ${settings.name}'),
+                      onVisible: () =>
+                          Navigator.of(context).pushNamed('/error-404'),
+                    ),
+                  );
+                });
+
+                return Center(
+                  child: Text('Ruta no encontrada: ${settings.name}'),
+                );
+              },
+            ),
+          ),
+        );
     }
   }
 
-  static void showScreen(BuildContext context, String routeName) {
-    if (routeName == "/login") {
+  /// [showScreen] - Es la función encargada de navegar a una ruta de la
+  /// aplicación.
+  static void showScreen(
+    BuildContext context,
+    String routeName,
+  ) {
+    if (routeName == '/login') {
       Navigator.of(context).push(
         PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) => LoginView(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            var begin = const Offset(31.0, -3.0);
-            var end = Offset.zero;
-            var curve = Curves.easeInOutCubicEmphasized;
-            var tween =
+            const begin = Offset(31, -3);
+            const end = Offset.zero;
+            const curve = Curves.easeInOutCubicEmphasized;
+            final tween =
                 Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-            var offsetAnimation = animation.drive(tween);
+            final offsetAnimation = animation.drive(tween);
             return SlideTransition(
               position: offsetAnimation,
               child: child,
@@ -89,7 +133,9 @@ class Routes {
         js.context.callMethod('history.replaceState', ['/$routeName']);
       } catch (e) {
         throw Exception(
-            'Error al actualizar la URL en la barra de direcciones del navegador: $e');
+          'Error al actualizar la URL en la barra de direcciones del '
+          'navegador: $e',
+        );
       }
     }
   }
@@ -101,37 +147,44 @@ class Routes {
       builder: (context) {
         switch (context.watch<AuthService>().status) {
           case AuthStatus.Uninitialized:
-            return const HomeView();
+            return HomeView();
           case AuthStatus.Authenticating:
-            // Muestra un indicador de carga mientras se determina el estado de autenticación
+            // Muestra un indicador de carga mientras se determina el estado
+            //de autenticación
             return _buildLoadingScreen();
           case AuthStatus.Authenticated:
             // Si el usuario está autenticado, muestra la página solicitada
             return page;
           case AuthStatus.Unauthenticated:
-            // Si el usuario no está autenticado, redirige a la página de inicio de sesión
+            // Si el usuario no está autenticado, redirige a la página de
+            //inicio de sesión
             return LoginView();
-          default:
-            // En caso de un estado no válido, muestra un mensaje de error
-            return _buildErrorScreen();
         }
       },
     );
   }
 
+  /// [buildAuthenticatedScreen] - Es la función encargada de construir el
+  ///  Widget si el usuario está autenticado, sino esta autenticado, entonces
+  /// construye el widget [BtnLoginAndRegisterComponent]
   static Widget buildAuthenticatedScreen(Widget child, BuildContext context) {
     switch (context.watch<AuthService>().status) {
       case AuthStatus.Uninitialized:
         return const BtnLoginAndRegisterComponent();
 
+      // Si el usuario está autenticado, muestra la página solicitada
       case AuthStatus.Authenticated:
-        // Si el usuario está autenticado, muestra la página solicitada
         return child;
+
+      // Si el usuario no está autenticado, redirige a la página de inicio de
+      // sesión
       case AuthStatus.Unauthenticated:
-        // Si el usuario no está autenticado, redirige a la página de inicio de sesión
         return const BtnLoginAndRegisterComponent();
-      default:
-        return const BtnLoginAndRegisterComponent();
+
+      case AuthStatus.Authenticating:
+        return const CircularProgressIndicator.adaptive();
+      // default:
+      //   return const BtnLoginAndRegisterComponent();
     }
   }
 
@@ -143,6 +196,9 @@ class Routes {
     );
   }
 
+  /// [_buildErrorScreen] - Es la función encargada de construir el widget
+  ///  [Scaffold] con el estado de autenticación no válido
+  // ignore: unused_element
   static Widget _buildErrorScreen() {
     return const Scaffold(
       body: Center(

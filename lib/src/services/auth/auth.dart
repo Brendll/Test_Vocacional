@@ -195,7 +195,7 @@ class AuthService with ChangeNotifier {
       _status = AuthStatus.Unauthenticated;
     } else {
       DocumentSnapshot userSnap =
-          await _db.collection('Maestros').doc(user.uid).get();
+          await _db.collection('TestUser').doc(user.uid).get();
       _user.setter(userSnap);
       _status = AuthStatus.Authenticated;
     }

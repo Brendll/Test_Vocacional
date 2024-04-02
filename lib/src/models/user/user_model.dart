@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +10,11 @@ enum UserModelStatus {
 }
 
 class UserModel with ChangeNotifier {
+  UserModel.instance() {
+    //TODO Add code here
+  }
+
+  UserModel();
   UserModelStatus _status = UserModelStatus.Ended;
   String _errorCode = '';
   String _errorMessage = '';
@@ -95,22 +102,29 @@ class UserModel with ChangeNotifier {
 
   // Método para establecer todos los datos del usuario
   void setter(DocumentSnapshot userDoc) {
-    _correo = userDoc['correo'];
-    _password = userDoc['password'];
-    _nombre = userDoc['nombre'];
-    _apellidoP = userDoc['apellidoP'];
-    _apellidoM = userDoc['apellidoM'];
-    _curp = userDoc['curp'];
-    _carreras = userDoc['carreras'];
-    _birthday = userDoc['birthday'];
+    _correo = userDoc['correo'].toString();
+    _password = userDoc['password'].toString();
+    _nombre = userDoc['nombre'].toString();
+    _apellidoP = userDoc['apellidoP'].toString();
+    _apellidoM = userDoc['apellidoM'].toString();
+    _curp = userDoc['curp'].toString();
+    _carreras = (userDoc['carreras'] as List<dynamic>)
+        .map((carrera) => carrera.toString())
+        .toList();
+    final dynamic birthdayData = userDoc['birthday'];
+    if (birthdayData is int) {
+      // Si el valor es un timestamp de tipo int
+      _birthday = DateTime.fromMillisecondsSinceEpoch(birthdayData);
+    } else if (birthdayData is Timestamp) {
+      // Si el valor es un Timestamp de Firestore
+      _birthday = birthdayData.toDate();
+    } else {
+      // Manejar otro tipo de valores o lanzar un error si es necesario
+      throw ArgumentError(
+          'El valor del campo birthday no es un timestamp válido.');
+    }
 
     notifyListeners();
-  }
-
-  UserModel();
-
-  UserModel.instance() {
-    //TODO Add code here
   }
 
   Future<bool> getter(String uid) async {

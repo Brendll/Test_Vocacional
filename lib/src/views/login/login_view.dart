@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test_vocacional_1/src/models/user/user_model.dart';
+import 'package:flutter_test_vocacional_1/src/services/auth/auth.dart';
 
 import 'package:flutter_test_vocacional_1/src/util/responsive/responsive_design.dart';
 import 'package:flutter_test_vocacional_1/src/views/login/layouts/login_layouts.dart';
@@ -16,7 +18,7 @@ class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
     if (context.read<ResponsiveDesign>().isMobileAndTablet(context)) {
       //Mobile & Tablet
-      context.read<ViewMenu>().widgetDrawer = Drawer();
+      context.read<ViewMenu>().widgetDrawer = const Drawer();
       context.read<ViewMenu>().widgetBar = const Row(
         children: [
           Expanded(flex: 3, child: SizedBox(child: TitleComponent())),
@@ -42,7 +44,7 @@ class LoginView extends StatelessWidget {
       drawer: context.watch<ViewMenu>().widgetDrawer,
       backgroundColor: Colores.colorTealFuerte,
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(71, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(71, 255, 255, 255),
         centerTitle: true,
         elevation: 3.0,
       ),
@@ -69,7 +71,7 @@ class LoginView extends StatelessWidget {
                 // Cerrar el diálogo
                 Navigator.of(context).pop();
               },
-              child: Text('Cerrar'),
+              child: const Text('Cerrar'),
             ),
           ],
         );

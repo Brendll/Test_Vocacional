@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_test_vocacional_1/src/models/app/app_model.dart';
 import 'package:flutter_test_vocacional_1/src/controllers/base_controller.dart'
     as controller;
+import 'package:flutter_test_vocacional_1/src/models/app/app_model.dart';
 import 'package:flutter_test_vocacional_1/src/models/carreers/carreras_model.dart';
 import 'package:flutter_test_vocacional_1/src/models/user/user_model.dart';
 import 'package:flutter_test_vocacional_1/src/routes/router.dart';
@@ -12,47 +12,49 @@ import 'package:flutter_test_vocacional_1/src/views/util/color/colores.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-// ignore: must_be_immutable
+/// TODO: Hacer la documentación
+/// MyApp es la clase principal de la aplicación
+/// La clase MyApp es el punto de entrada de la aplicación
+/// [MyApp] es un StatelessWidget
+/// [key] es la clave única de la aplicación
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
-
-  List<String> images = [
-    "assets/images/programacion.jpeg",
-    "assets/images/electronica.jpeg",
-    "assets/images/rh.jpeg",
-    "assets/images/robotica.jpeg",
-    "assets/images/puericultura.jpeg"
-  ];
+  /// [MyApp] es un StatelessWidget
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     //controller.init(context);
     return MultiProvider(
-        providers: [
-          ChangeNotifierProvider<AppModel>(create: (context) => AppModel()),
-          ChangeNotifierProvider<UserModel>(create: (context) => UserModel()),
-          ChangeNotifierProvider<AuthService>(
-              create: (context) => AuthService()),
-          ChangeNotifierProvider<ResponsiveDesign>(
-            create: (context) => ResponsiveDesign(),
-          ),
-          ChangeNotifierProvider<ViewMenu>(
-            create: (context) => ViewMenu(),
-          ),
-          ChangeNotifierProvider<CarrerasModel>(
-            create: (context) => CarrerasModel(),
-          ),
-          Provider<Routes>(
-              create: (_) => Routes()), // Asegúrate de proporcionar Routes aquí
-        ],
-        child: Builder(builder: (context) {
+      providers: [
+        ChangeNotifierProvider<AppModel>(
+          create: (context) => AppModel(),
+        ),
+        ChangeNotifierProvider<UserModel>(
+          create: (context) => UserModel(),
+        ),
+        ChangeNotifierProvider<AuthService>(
+          create: (context) => AuthService(),
+        ),
+        ChangeNotifierProvider<ResponsiveDesign>(
+          create: (context) => ResponsiveDesign(),
+        ),
+        ChangeNotifierProvider<ViewMenu>(
+          create: (context) => ViewMenu(),
+        ),
+        ChangeNotifierProvider<CarrerasModel>(
+          create: (context) => CarrerasModel(),
+        ),
+        Provider<Routes>(
+          create: (_) => Routes(),
+        ), // Asegúrate de proporcionar Routes aquí
+      ],
+      child: Builder(
+        builder: (context) {
           controller.init(context);
 
           return MaterialApp(
             title: 'CBTIS No.61',
-            debugShowMaterialGrid: false,
             debugShowCheckedModeBanner: false,
-            showSemanticsDebugger: false,
             theme: ThemeData(
               brightness: Brightness.light,
               primaryColor: Colores.colorPrimario,
@@ -72,8 +74,10 @@ class MyApp extends StatelessWidget {
             ),
             initialRoute: Routes.initialRoute,
             onGenerateRoute: Routes.generateRoute,
-            //routes: Routes.routes,
+            routes: Routes.routes,
           );
-        }));
+        },
+      ),
+    );
   }
 }

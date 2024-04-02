@@ -6,14 +6,10 @@ class BtnLoginAndRegisterComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
-      children: [
-        Expanded(
-            child: BtnBarComponent(
-                routeName: 'login',
-                iconData: Icons.login_sharp,
-                label: 'Iniciar Sesión')),
-      ],
-    );
+    return const Expanded(
+        child: BtnBarComponent(
+            routeName: 'login',
+            iconData: Icons.login_sharp,
+            label: 'Iniciar Sesión'));
   }
 }
