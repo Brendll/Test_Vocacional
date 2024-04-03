@@ -7,6 +7,8 @@ import 'package:flutter_test_vocacional_1/src/services/auth/auth.dart';
 import 'package:flutter_test_vocacional_1/src/util/responsive/responsive_design.dart';
 import 'package:flutter_test_vocacional_1/src/views/home/components/cbtis.dart';
 import 'package:flutter_test_vocacional_1/src/views/home/components/dgti.dart';
+import 'package:flutter_test_vocacional_1/src/views/home/components/title_test.dart';
+import 'package:flutter_test_vocacional_1/src/views/home/layouts/home_layout.dart';
 import 'package:flutter_test_vocacional_1/src/views/home/layouts/swiper_home.dart';
 import 'package:flutter_test_vocacional_1/src/views/util/bar/title_bar.dart';
 import 'package:flutter_test_vocacional_1/src/views/util/build_widget_screen_type/build_widget_screen_type.dart';
@@ -30,12 +32,13 @@ class HomeView extends StatelessWidget {
   /// que se encarga de controlar el desplazamiento de la pantalla
   final ScrollController scrollController = ScrollController();
 
-  final GlobalKey listViewKeyHome = GlobalKey();
+  /// [listViewKeyHome] - Es una instancia de la clase [GlobalKey] que se encarga
+  /// de TODO el renderizado de la pantalla
+  final listViewKeyHome = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     rd.initScreen(context);
-
     return Scaffold(
       drawer: context.watch<ViewMenu>().widgetDrawer,
       appBar: AppBar(
@@ -57,96 +60,7 @@ class HomeView extends StatelessWidget {
             ),
         ],
       ),
-      body: ListView(
-        controller: scrollController,
-        children: <Widget>[
-          const Dgti(),
-          const SwiperHome(),
-          const SizedBox(height: 50),
-          Column(
-            children: [
-              Cbtis(
-                scrollController: scrollController,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment
-                    .center, // Centra los logotipos horizontalmente
-                children: [
-                  Image.asset(
-                    'assets/images/rojo.png', // Ruta de tu primer imagen
-                    height: 70, // Ajusta la altura según sea necesario
-                  ),
-                  const SizedBox(width: 20), // Espacio entre los logotipos
-                  Image.asset(
-                    'assets/images/logo2.png', // Ruta de tu segundo imagen
-                    height: 50, // Ajusta la altura según sea necesario
-                  ),
-                ],
-              ),
-
-              const SizedBox(
-                height: 20,
-              ), // Espacio entre la imagen del plantel y la sección de oferta
-              // educativa
-              const Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Ofertas Educativas',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Color.fromARGB(246, 0, 0, 0),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-
-              const SizedBox(
-                height: 20,
-              ), // Agrega espacio entre las ingenierías y los botones
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      // Acción cuando se presiona el botón de "Iniciar Test"
-                    },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.blue, // Color del texto del botón
-                      elevation: 3, // Elevación del botón
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 15,
-                      ), // Ajusta el tamaño del botón
-                    ),
-                    child: const Text('Iniciar Test'),
-                  ),
-                  const SizedBox(width: 20), // Espacio entre los botones
-                  ElevatedButton(
-                    onPressed: () {
-                      // Acción cuando se presiona el botón de "Registrarse"
-                    },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor:
-                          Colors.green, // Color del texto del botón
-                      elevation: 3, // Elevación del botón
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 15,
-                      ), // Ajusta el tamaño del botón
-                    ),
-                    child: const Text('Registrarse'),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),
+      body: HomeLayout(),
     );
   }
 }

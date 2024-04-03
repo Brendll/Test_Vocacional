@@ -44,6 +44,7 @@ flutter:
         - assets/images/puericultura.jpeg
         - assets/images/logo2.png
         - assets/images/techumbre_cbtis_61-1.webp
+        - assets/images/title_fondo.jpg
     fonts:
         -
             family: Nunito Black

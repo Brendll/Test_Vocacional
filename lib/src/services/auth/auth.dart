@@ -65,12 +65,12 @@ class AuthService with ChangeNotifier {
     _status = AuthStatus.Authenticating;
     notifyListeners();
     try {
-      UserCredential authResult = await _auth.signInWithEmailAndPassword(
+      var authResult = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      User user = authResult.user!;
+      var user = authResult.user!;
       notifyListeners();
       return user;
     } catch (e) {
@@ -127,13 +127,15 @@ class AuthService with ChangeNotifier {
     _status = AuthStatus.Authenticating;
     notifyListeners();
     try {
-      UserCredential authResult = await _auth.createUserWithEmailAndPassword(
+      final authResult = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      signInWithEmailAndPassword(email, password);
-      User user = authResult.user!;
-
+      _status = AuthStatus.Authenticated;
+      notifyListeners();
+      await signInWithEmailAndPassword(email, password);
+      final user = authResult.user!;
+      _status = AuthStatus.Authenticated;
       notifyListeners();
       return user;
     } catch (e) {
@@ -159,7 +161,7 @@ class AuthService with ChangeNotifier {
   Future<void> deleteUser() async {
     try {
       // Obtiene la referencia al usuario actualmente autenticado
-      User? user = FirebaseAuth.instance.currentUser;
+      var user = FirebaseAuth.instance.currentUser;
 
       if (user != null) {
         // Elimina al usuario
@@ -184,7 +186,7 @@ class AuthService with ChangeNotifier {
       'lastSign': DateTime.now(),
       //'photoURL': user.photoURL,
     }, SetOptions(merge: true));
-    DocumentSnapshot userData = await userRef.get();
+    var userData = await userRef.get();
     return userData;
   }
 
@@ -194,10 +196,10 @@ class AuthService with ChangeNotifier {
     if (user == null) {
       _status = AuthStatus.Unauthenticated;
     } else {
-      DocumentSnapshot userSnap =
-          await _db.collection('TestUser').doc(user.uid).get();
-      _user.setter(userSnap);
-      _status = AuthStatus.Authenticated;
+      // DocumentSnapshot userSnap =
+      //     await _db.collection('TestUser').doc(user.uid).get();
+      // _user.setter(userSnap);
+      // _status = AuthStatus.Authenticated;
     }
     notifyListeners();
   }

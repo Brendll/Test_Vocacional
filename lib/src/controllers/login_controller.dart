@@ -54,6 +54,7 @@ class LoginController extends BaseController {
           context.read<UserModel>().error = false;
           context.read<UserModel>().errorCode = '';
           context.read<UserModel>().errorMessage = '';
+          Navigator.pop(context);
         } else {
           // If the user does not exist in the 'TestUser' collection, then show
           //an error message

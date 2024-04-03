@@ -33,7 +33,7 @@ class Routes {
     '/test': (_) => const FormTestView(),
     '/login': (_) => LoginView(),
     //'/register': (_) => const RegisterView(),
-    '/continue-register/': (_) => const ContinueRegisterView(),
+    '/continue-register/': (_) => ContinueRegisterView(),
     '/carreras': (_) => CarrerasView(),
   };
 
@@ -55,7 +55,7 @@ class Routes {
       //return MaterialPageRoute(builder: (_) => const RegisterView());
       case '/continue-register':
         return _checkAuthAndNavigate(
-          const ContinueRegisterView(),
+          ContinueRegisterView(),
         );
       case '/carreras':
         // Devuelve una ruta de material con CarrerasView como su constructor
@@ -182,7 +182,7 @@ class Routes {
         return const BtnLoginAndRegisterComponent();
 
       case AuthStatus.Authenticating:
-        return const CircularProgressIndicator.adaptive();
+        return const BtnLoginAndRegisterComponent();
       // default:
       //   return const BtnLoginAndRegisterComponent();
     }
