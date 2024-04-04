@@ -27,7 +27,7 @@ class ContinueRegisterView extends StatelessWidget {
           color: Color.fromARGB(255, 0, 0, 0),
         ),
         actions: [
-          if (LoginController().authService.status == AuthStatus.Authenticated)
+          if (context.watch<AuthService>().status == AuthStatus.Authenticated)
             IconButton(
               icon: const Icon(Icons.exit_to_app),
               onPressed: () {
@@ -35,6 +35,9 @@ class ContinueRegisterView extends StatelessWidget {
               },
             ),
         ],
+      ),
+      body: const Form(
+        child: Text('Continue Register'),
       ),
     );
   }

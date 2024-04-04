@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_test_vocacional_1/src/controllers/login_controller.dart';
 import 'package:flutter_test_vocacional_1/src/services/auth/auth.dart';
+import 'package:flutter_test_vocacional_1/src/util/pie_pagina/pie_pagina.dart';
 import 'package:flutter_test_vocacional_1/src/util/responsive/responsive_design.dart';
 import 'package:flutter_test_vocacional_1/src/views/home/components/cbtis.dart';
 import 'package:flutter_test_vocacional_1/src/views/home/components/dgti.dart';
@@ -41,26 +42,8 @@ class HomeView extends StatelessWidget {
     rd.initScreen(context);
     return Scaffold(
       drawer: context.watch<ViewMenu>().widgetDrawer,
-      appBar: AppBar(
-        toolbarHeight: 60,
-        backgroundColor: Colores.colorAppBar,
-        title: TitleBar(),
-        centerTitle: true,
-        elevation: 1,
-        actionsIconTheme: const IconThemeData(
-          color: Color.fromARGB(255, 0, 0, 0),
-        ),
-        actions: [
-          if (LoginController().authService.status == AuthStatus.Authenticated)
-            IconButton(
-              icon: const Icon(Icons.exit_to_app),
-              onPressed: () {
-                LoginController().signOut(context);
-              },
-            ),
-        ],
-      ),
       body: HomeLayout(),
     );
   }
 }
+//247 131 7301

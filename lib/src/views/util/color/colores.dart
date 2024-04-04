@@ -14,7 +14,7 @@ class Colores {
 
   // Colores para la interfaz de usuario
   static const Color colorFondoClaro = Color(0xffffffff); // Fondo claro
-  static const Color colorFondoFuerte = Color(0x7AA2E3); // Fondo fuerte
+  static const Color colorFondoFuerte = Color(0x007aa2e3); // Fondo fuerte
   static const Color colorAppBar = Color(0xFFF8F6E3); // Color de la AppBar
   static const Color colorTealDebil = Color(0xff97E7E1); // Teal débil
   static const Color colorTealFuerte = Color(0xff6AD4DD); // Teal fuerte

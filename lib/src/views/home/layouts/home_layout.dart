@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_test_vocacional_1/src/routes/router.dart';
+import 'package:flutter_test_vocacional_1/src/util/pie_pagina/pie_pagina.dart';
 
 import 'package:flutter_test_vocacional_1/src/util/responsive/responsive_design.dart';
 import 'package:flutter_test_vocacional_1/src/views/home/components/dgti.dart';
 import 'package:flutter_test_vocacional_1/src/views/home/components/title_test.dart';
+import 'package:flutter_test_vocacional_1/src/views/home/components/welcome_text.dart';
+import 'package:flutter_test_vocacional_1/src/views/util/Bar/title_bar.dart';
+import 'package:flutter_test_vocacional_1/src/views/util/color/colores.dart';
 
 import 'package:provider/provider.dart';
 
@@ -77,11 +83,85 @@ class HomeLayout extends StatelessWidget {
   final listViewKeyHome = GlobalKey();
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    context.read<ResponsiveDesign>().initScreen(context);
+    final rdc = context.watch<ResponsiveDesign>();
+    return CustomScrollView(
       controller: scrollController,
-      children: const <Widget>[
-        Dgti(),
-        TitleTest(),
+      slivers: <Widget>[
+        const SliverToBoxAdapter(
+          child: Dgti(),
+        ),
+        SliverAppBar(
+          pinned: true,
+          expandedHeight: 60,
+          backgroundColor: Colores.colorAppBar,
+          title: TitleBar(),
+          centerTitle: true,
+          elevation: 1,
+          actionsIconTheme: const IconThemeData(
+            color: Colors.black,
+          ),
+        ),
+        const SliverAnimatedOpacity(
+          alwaysIncludeSemantics: true,
+          sliver: SliverToBoxAdapter(
+            child: TitleTest(),
+          ),
+          opacity: .8,
+          duration: Duration(seconds: 3),
+          curve: Easing.legacy,
+        ),
+        const SliverToBoxAdapter(
+          child: SizedBox(height: 90),
+        ),
+        const SliverToBoxAdapter(
+          child: Center(
+            child: TextoCuerpo(
+              title:
+                  'Descubre tus Intereses y Facilidades con Este Test Vocacional',
+              texto:
+                  'En este cuestionario, encontrarás la oportunidad de explorar '
+                  'tus intereses y habilidades de una manera profunda. El propósito '
+                  'es guiarte hacia lo que realmente te apasiona y hacia las '
+                  'actividades que encuentras más fáciles de realizar. Este '
+                  'ejercicio no solo busca ayudarte en la elección de tu camino '
+                  'académico, sino también en la planificación de tu futuro. '
+                  '¡Descubre qué te mueve y qué te impulsa a seguir adelante en '
+                  'tu vida estudiantil!',
+            ),
+          ),
+        ),
+        const SliverToBoxAdapter(
+          child: SizedBox(
+            height: 90,
+          ),
+        ),
+        const SliverToBoxAdapter(
+          child: Center(
+            child: TextoCuerpo(
+              title: 'Iniciar Test de Orientación Vocacional',
+              texto: 'Haz clic en el botón de abajo para comenzar el Test de '
+                  'Orientación Vocacional',
+            ),
+          ),
+        ),
+        const SliverToBoxAdapter(
+          child: SizedBox(height: 90),
+        ),
+        SliverToBoxAdapter(
+          child: Center(
+            child: SizedBox(
+              width: 150,
+              child: TextButton(
+                onPressed: () => Routes.showScreen(context, 'test'),
+                child: const Text('Iniciar Test'),
+              ),
+            ),
+          ),
+        ),
+        const SliverToBoxAdapter(
+          child: Center(child: PiePagina()),
+        ),
       ],
     );
   }

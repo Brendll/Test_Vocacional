@@ -46,15 +46,13 @@ class LoginView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(71, 255, 255, 255),
         centerTitle: true,
-        elevation: 3.0,
+        elevation: 3,
       ),
-      body: SingleChildScrollView(
-        child: LoginLayouts(),
-      ),
+      body: LoginLayouts(),
     );
   }
 
-  // Función para mostrar un diálogo
+  /// Función para mostrar un diálogo
   void showError(BuildContext context) {
     // Mostrar el diálogo
     showDialog(
@@ -64,6 +62,11 @@ class LoginView extends StatelessWidget {
         return AlertDialog(
           title: Text(context.watch<UserModel>().errorMessage),
           content: Text(context.watch<UserModel>().errorCode),
+          elevation: 4,
+          icon: const Icon(
+            Icons.error_outline_sharp,
+            color: Colores.colorError,
+          ),
           actions: <Widget>[
             // Botón de acción
             TextButton(

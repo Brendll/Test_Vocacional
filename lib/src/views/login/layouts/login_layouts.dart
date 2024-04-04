@@ -1,10 +1,9 @@
 //import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_test_vocacional_1/src/controllers/login_controller.dart'
-    as loginC;
 import 'package:flutter_login/flutter_login.dart';
-import 'package:flutter_test_vocacional_1/src/routes/router.dart';
+import 'package:flutter_test_vocacional_1/src/controllers/login_controller.dart';
 import 'package:flutter_test_vocacional_1/src/views/util/color/colores.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginLayouts extends StatelessWidget {
   LoginLayouts({super.key});
@@ -17,24 +16,29 @@ class LoginLayouts extends StatelessWidget {
       width: double.maxFinite,
       height: double.maxFinite,
       child: FlutterLogin(
+        userType: LoginUserType.email,
         onLogin: (p0) {
-          loginC.LoginController()
-              .signInWithEmailAndPassword(context, p0.name, p0.password);
+          LoginController().signInWithEmailAndPassword(
+            context: context,
+            email: p0.name,
+            password: p0.password,
+          );
           return null;
         },
         onSignup: (p0) {
-          loginC.LoginController()
+          LoginController()
               .signUpWithEmailAndPassword(context, p0.name!, p0.password!);
           return null;
         },
-        onSubmitAnimationCompleted: () => Routes.showScreen(context, 'test'),
+        //onSubmitAnimationCompleted: () => Routes.showScreen(context, 'test'),
         onRecoverPassword: (p0) {
-          loginC.LoginController().recoverPassword(context, p0);
+          LoginController().recoverPassword(context, p0);
           return null;
         },
         logoTag: 'CBTis 61',
         title: 'CBTis 61',
         initialIsoCode: 'es',
+
         logo: const AssetImage(
           //'https://cbtis74.edu.mx/wp-content/uploads/2024/03/DGETI-horizontal-1024x341.png',
           //'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/DGETI_logo.svg/865px-DGETI_logo.svg.png',
@@ -44,22 +48,36 @@ class LoginLayouts extends StatelessWidget {
         scrollable: true,
         titleTag: 'CBTis 61',
         theme: LoginTheme(
-            logoWidth: 800,
-            accentColor: Colores.colorTextoClaro,
-            pageColorDark: Colores.colorFondoFuerte,
-            pageColorLight: Colores.colorFondoClaro,
-            afterHeroFontSize: 25,
-            primaryColor: Colores.colorPrimario,
-            cardTheme: const CardTheme(
-                color: Colors.white, elevation: 4, shadowColor: Colors.black),
-            errorColor: Colores.colorError),
-        initialAuthMode: AuthMode.login,
+          logoWidth: 800,
+          titleStyle: TextStyle(
+            fontFamily: GoogleFonts.castoro().fontFamily,
+          ),
+          accentColor: Colors.black,
+          pageColorDark: Colores.colorFondoFuerte,
+          pageColorLight: Colores.colorFondoClaro,
+          afterHeroFontSize: 25,
+          primaryColor: Colores.colorPrimario,
+          cardTheme: const CardTheme(
+            color: Colors.white,
+            elevation: 4,
+            shadowColor: Colors.black,
+            margin: EdgeInsets.all(10),
+            surfaceTintColor: Colors.white,
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(20),
+              ),
+            ),
+          ),
+          errorColor: Colores.colorError,
+        ),
+        //initialAuthMode: AuthMode.login,
         confirmSignupKeyboardType: TextInputType.emailAddress,
-        footer: '© 2024 Todos los Derechos Reservados',
+
         messages: LoginMessages(
           signUpSuccess: '¡Cuenta creada exitosamente!',
           additionalSignUpFormDescription: 'Ingresa tus datos adicionales',
-          flushbarTitleError: 'Error',
           additionalSignUpSubmitButton: 'Continuar',
           confirmRecoverIntro: 'Ingresa tu correo para confirmar',
           recoverPasswordIntro:

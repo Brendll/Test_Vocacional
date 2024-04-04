@@ -8,6 +8,7 @@ import 'package:flutter_test_vocacional_1/src/views/continue_register/continue_r
 import 'package:flutter_test_vocacional_1/src/views/form_test/form_test_view.dart';
 import 'package:flutter_test_vocacional_1/src/views/home/home_view.dart';
 import 'package:flutter_test_vocacional_1/src/views/login/login_view.dart';
+import 'package:flutter_test_vocacional_1/src/views/reset_password/reset_password_view.dart';
 import 'package:flutter_test_vocacional_1/src/views/util/bar/components/btn_login_and_register_component.dart';
 import 'package:provider/provider.dart';
 
@@ -30,11 +31,16 @@ class Routes {
   static Map<String, Widget Function(BuildContext)> routes = {
     initialRoute: (_) => HomeView(),
     '/about': (_) => const AboutView(),
-    '/test': (_) => const FormTestView(),
+    '/test': (_) => buildAuthenticatedScreen(
+          child1: const FormTestView(),
+          child2: LoginView(),
+          context: _,
+        ),
     '/login': (_) => LoginView(),
     //'/register': (_) => const RegisterView(),
-    '/continue-register/': (_) => ContinueRegisterView(),
+    '/continue-register': (_) => ContinueRegisterView(),
     '/carreras': (_) => CarrerasView(),
+    //'reset-password': (_) => const ResetPasswordView(resetPasswordLink: '',),
   };
 
   /// [generateRoute] es una función que se encarga de manejar las rutas de la
@@ -42,62 +48,93 @@ class Routes {
   /// @param RouteSettings settings es una variable que contiene la
   /// configuración de la ruta
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    switch (settings.name) {
-      case '/':
-        return MaterialPageRoute(builder: (_) => HomeView());
-      case '/about':
-        return MaterialPageRoute(builder: (_) => const AboutView());
-      case '/test':
-        return _checkAuthAndNavigate(const FormTestView());
-      case '/login':
-        return MaterialPageRoute(builder: (_) => LoginView());
-      //case '/register':
-      //return MaterialPageRoute(builder: (_) => const RegisterView());
-      case '/continue-register':
-        return _checkAuthAndNavigate(
-          ContinueRegisterView(),
-        );
-      case '/carreras':
-        // Devuelve una ruta de material con CarrerasView como su constructor
-        return MaterialPageRoute(
-          builder: (_) => CarrerasView(),
-        );
-      case '/error-404':
-        return MaterialPageRoute(
-          builder: (_) => Scaffold(
-            appBar: AppBar(
-              title: const Text('Error 404'),
-            ),
-            body: Center(
-              child: Text('Ruta no encontrada: ${settings.name}'),
-            ),
-          ),
-        );
-      default:
-        return MaterialPageRoute(
-          builder: (_) => Scaffold(
-            appBar: AppBar(
-              title: const Text('Error 404'),
-            ),
-            body: Builder(
-              builder: (context) {
-                Future.delayed(const Duration(seconds: 5), () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Ruta no encontrada: ${settings.name}'),
-                      onVisible: () =>
-                          Navigator.of(context).pushNamed('/error-404'),
-                    ),
-                  );
-                });
+    final url = settings.name.toString();
 
-                return Center(
-                  child: Text('Ruta no encontrada: ${settings.name}'),
-                );
-              },
+    final uri = Uri.parse(url);
+    final queryParameters = uri.queryParameters;
+    String path = uri.path; //'${uri.scheme}://${uri.host}${uri.path}';
+
+// Obtener los valores de los parámetros específicos
+    final mode = queryParameters['mode'].toString();
+    final oobCode = queryParameters['oobCode'].toString();
+    final apiKey = queryParameters['apiKey'].toString();
+    final lang = queryParameters['lang'].toString();
+
+    debugPrint('Mode: $mode');
+    debugPrint('OobCode: $oobCode');
+    debugPrint('ApiKey: $apiKey');
+    debugPrint('Lang: $lang');
+
+    debugPrint('Reset Password: $uri'
+        '/name: ${settings.name}'
+        '\n\n/reset-password/path: $path');
+    if (path == '/reset-password') {
+      debugPrint('Reset Password: $queryParameters'
+          '/name: ${settings.name}');
+      return MaterialPageRoute(
+        builder: (_) => ResetPasswordView(
+          resetPasswordLink: settings.name.toString(),
+        ),
+      );
+    } else {
+      switch (settings.name) {
+        case '/':
+          return MaterialPageRoute(builder: (_) => HomeView());
+        case '/about':
+          return MaterialPageRoute(builder: (_) => const AboutView());
+        case '/test':
+          return _checkAuthAndNavigate(const FormTestView());
+        case '/login':
+          return MaterialPageRoute(builder: (_) => LoginView());
+        //case '/register':
+        //return MaterialPageRoute(builder: (_) => const RegisterView())
+
+        case '/continue-register':
+          return _checkAuthAndNavigate(
+            ContinueRegisterView(),
+          );
+        case '/carreras':
+          // Devuelve una ruta de material con CarrerasView como su constructor
+          return MaterialPageRoute(
+            builder: (_) => CarrerasView(),
+          );
+        case '/error-404':
+          return MaterialPageRoute(
+            builder: (_) => Scaffold(
+              appBar: AppBar(
+                title: const Text('Error 404'),
+              ),
+              body: Center(
+                child: Text('Ruta no encontrada: ${settings.name}'),
+              ),
             ),
-          ),
-        );
+          );
+        default:
+          return MaterialPageRoute(
+            builder: (_) => Scaffold(
+              appBar: AppBar(
+                title: const Text('Error 404'),
+              ),
+              body: Builder(
+                builder: (context) {
+                  Future.delayed(const Duration(seconds: 5), () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Ruta no encontrada: ${settings.name}'),
+                        onVisible: () =>
+                            Navigator.of(context).pushNamed('/error-404'),
+                      ),
+                    );
+                  });
+
+                  return Center(
+                    child: Text('Ruta no encontrada: ${settings.name}'),
+                  );
+                },
+              ),
+            ),
+          );
+      }
     }
   }
 
@@ -129,8 +166,8 @@ class Routes {
       Navigator.of(context).pushNamed('/$routeName');
       // Actualizar la URL en la barra de direcciones del navegador
       try {
-        js.context.callMethod('history.pushState', ['/$routeName']);
-        js.context.callMethod('history.replaceState', ['/$routeName']);
+        //js.context.callMethod('history.pushState', ['/$routeName']);
+        ///js.context.callMethod('history.replaceState', ['/$routeName']);
       } catch (e) {
         throw Exception(
           'Error al actualizar la URL en la barra de direcciones del '
@@ -167,22 +204,26 @@ class Routes {
   /// [buildAuthenticatedScreen] - Es la función encargada de construir el
   ///  Widget si el usuario está autenticado, sino esta autenticado, entonces
   /// construye el widget [BtnLoginAndRegisterComponent]
-  static Widget buildAuthenticatedScreen(Widget child, BuildContext context) {
+  static Widget buildAuthenticatedScreen({
+    required Widget child1,
+    required Widget child2,
+    required BuildContext context,
+  }) {
     switch (context.watch<AuthService>().status) {
       case AuthStatus.Uninitialized:
-        return const BtnLoginAndRegisterComponent();
+        return child2;
 
       // Si el usuario está autenticado, muestra la página solicitada
       case AuthStatus.Authenticated:
-        return child;
+        return child1;
 
       // Si el usuario no está autenticado, redirige a la página de inicio de
       // sesión
       case AuthStatus.Unauthenticated:
-        return const BtnLoginAndRegisterComponent();
+        return child2;
 
       case AuthStatus.Authenticating:
-        return const BtnLoginAndRegisterComponent();
+        return child2;
       // default:
       //   return const BtnLoginAndRegisterComponent();
     }

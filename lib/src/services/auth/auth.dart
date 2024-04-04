@@ -65,12 +65,12 @@ class AuthService with ChangeNotifier {
     _status = AuthStatus.Authenticating;
     notifyListeners();
     try {
-      var authResult = await _auth.signInWithEmailAndPassword(
+      final authResult = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      var user = authResult.user!;
+      final user = authResult.user!;
       notifyListeners();
       return user;
     } catch (e) {
@@ -80,23 +80,61 @@ class AuthService with ChangeNotifier {
     }
   }
 
+  /// [checkUserExistAndRedirect] - Método para verificar si el usuario existe y
+  /// redirigirlo a la pantalla de inicio de sesión. Actualiza el estado de
+  /// autenticación y notifica a los oyentes sobre el cambio de estado.
+  /// ``` dart
+  /// Future<bool> checkUserExistAndRedirect(User user) async {
+  ///   final DocumentSnapshot userDoc = await FirebaseFirestore.instance
+  ///       .collection('users')
+  ///       .doc(user.uid)
+  ///       .get();
+
+  ///   if (userDoc.exists && userDoc['TypeUsers'] == 'TestUser') {
+  ///     // El documento del usuario existe, inicia sesión normalmente
+  ///     return true;
+  ///   } else {
+  ///     return false;
+  ///   }
+  /// }
+  /// ```
   Future<bool> checkUserExistAndRedirect(User user) async {
-    DocumentSnapshot userDoc = await FirebaseFirestore.instance
+    final DocumentSnapshot userDoc = await FirebaseFirestore.instance
         .collection('users')
         .doc(user.uid)
         .get();
 
     if (userDoc.exists && userDoc['TypeUsers'] == 'TestUser') {
       // El documento del usuario existe, inicia sesión normalmente
+
       return true;
     } else {
       return false;
     }
   }
 
-// Después de que el usuario inicie sesión o se registre correctamente
+  /// Después de que el usuario inicie sesión o se registre correctamente
+  /// ``` dart
+  ///   Future<bool> checkUserDataAndRedirect(User user) async {
+  ///   final DocumentSnapshot userDoc = await FirebaseFirestore.instance
+  ///       .collection('TestUser')
+  ///       .doc(user.uid)
+  ///       .get();
+  ///   if (userDoc.exists) {
+  ///     // El documento del usuario existe, inicia sesión normalmente
+  ///     // (puedes implementar tu lógica aquí)
+  ///     debugPrint('Documento del usuario encontrado en Firestore');
+  ///     return true;
+  ///   } else {
+  ///     debugPrint('Documento del usuario no encontrado en Firestore');
+  ///     return false;
+  ///   }
+  /// }
+  ///
+  /// ```
+
   Future<bool> checkUserDataAndRedirect(User user) async {
-    DocumentSnapshot userDoc = await FirebaseFirestore.instance
+    final DocumentSnapshot userDoc = await FirebaseFirestore.instance
         .collection('TestUser')
         .doc(user.uid)
         .get();
@@ -145,6 +183,11 @@ class AuthService with ChangeNotifier {
     }
   }
 
+  String getOobCodeFromResetPasswordLink(String resetPasswordLink) {
+    final uri = Uri.parse(resetPasswordLink);
+    return uri.queryParameters['oobCode'].toString();
+  }
+
   /// [recoverPassword] - Método para recuperar la contraseña del usuario.
   /// Envía un correo electrónico de restablecimiento de contraseña al correo electrónico proporcionado.
   Future<void> recoverPassword(String email) async {
@@ -161,7 +204,7 @@ class AuthService with ChangeNotifier {
   Future<void> deleteUser() async {
     try {
       // Obtiene la referencia al usuario actualmente autenticado
-      var user = FirebaseAuth.instance.currentUser;
+      final user = FirebaseAuth.instance.currentUser;
 
       if (user != null) {
         // Elimina al usuario
@@ -181,12 +224,12 @@ class AuthService with ChangeNotifier {
   /// [updateUserData] - Método para actualizar los datos del usuario en Firestore.
   /// Se utiliza después de un inicio de sesión exitoso para almacenar información relevante del usuario.
   Future<DocumentSnapshot> updateUserData(User user) async {
-    DocumentReference userRef = _db.collection('TestUser').doc(user.uid);
+    final DocumentReference userRef = _db.collection('TestUser').doc(user.uid);
     userRef.set({
       'lastSign': DateTime.now(),
       //'photoURL': user.photoURL,
     }, SetOptions(merge: true));
-    var userData = await userRef.get();
+    final userData = await userRef.get();
     return userData;
   }
 

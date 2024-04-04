@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 
 import 'package:flutter_test_vocacional_1/src/controllers/login_controller.dart';
 import 'package:flutter_test_vocacional_1/src/routes/router.dart';
+import 'package:flutter_test_vocacional_1/src/views/util/Bar/components/btn_login_and_register_component.dart';
 import 'package:flutter_test_vocacional_1/src/views/util/bar/components/btn_bar_component.dart';
 
 class NavigationBarMenu extends StatelessWidget {
@@ -57,7 +58,7 @@ class NavigationBarMenu extends StatelessWidget {
         Expanded(
           flex: 3,
           child: Routes.buildAuthenticatedScreen(
-            BtnBarComponent(
+            child1: BtnBarComponent(
               onPressed: () {
                 LoginController().signOut(context);
               },
@@ -65,7 +66,8 @@ class NavigationBarMenu extends StatelessWidget {
               iconData: Icons.exit_to_app,
               label: 'Cerrar Sesión',
             ),
-            context,
+            context: context,
+            child2: const BtnLoginAndRegisterComponent(),
           ),
         ),
       ],

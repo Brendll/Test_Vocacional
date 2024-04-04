@@ -20,49 +20,35 @@ class LoginController extends BaseController {
   /// the email and password.
   /// Returns a [Future<bool>] indicating whether the sign in was successful or
   /// not.
-  Future<bool> signInWithEmailAndPassword(
-    BuildContext context,
-    String email,
-    String password,
-  ) async {
+  Future<bool> signInWithEmailAndPassword({
+    required BuildContext context,
+    required String email,
+    required String password,
+  }) async {
     try {
       // Attempts to sign in the user with the provided credentials
       final user =
           await authService.signInWithEmailAndPassword(email, password);
 
-      // Verify if the user exists
-      if (!(await authService.checkUserExistAndRedirect(user!))) {
-        // If the user does not exist in the 'users' collection and is not
-        // 'TestUser',
-        // then sign out the user and show an error message redirecting to the
-        //login screen.
-        await authService.signOut();
-        // Update the error state in the UserModel
-        context.read<UserModel>().error = true;
-        context.read<UserModel>().errorCode = 'No existe el usuario';
-        context.read<UserModel>().errorMessage = 'El usuario que ingresaste no '
-            'esta registrado como usuario para aplicar el test, '
-            'intenta con otro correo';
-        // Redirect to the login screen
-        Routes.showScreen(context, 'login');
+      final userExists = await authService.checkUserExistAndRedirect(user!);
+      final userData = await authService.checkUserDataAndRedirect(user);
+
+      if (userExists && userData) {
+        context.read<UserModel>().error = false;
+        context.read<UserModel>().errorCode = '';
+        context.read<UserModel>().errorMessage = '';
+        Routes.showScreen(context, 'test');
       } else {
-        // Verify if the user exists in the 'TestUser' collection
-        if (await authService.checkUserDataAndRedirect(user)) {
-          // If the user exists in the 'TestUser' collection, then start the
-          // session
-          // Update the error state in the UserModel
-          context.read<UserModel>().error = false;
-          context.read<UserModel>().errorCode = '';
-          context.read<UserModel>().errorMessage = '';
-          Navigator.pop(context);
-        } else {
-          // If the user does not exist in the 'TestUser' collection, then show
-          //an error message
-          // redirecting to the form to fill the data.
-          context.read<UserModel>().error = true;
-          context.read<UserModel>().errorCode = 'No has llenado tus datos';
-          context.read<UserModel>().errorMessage = '';
-          // Redirect to the form to fill the data.
+        context.read<UserModel>().error = true;
+        if (userExists == false) {
+          context.read<UserModel>().errorCode = 'No existe el usuario';
+          context.read<UserModel>().errorMessage = 'El usuario que '
+              'ingresaste no esta registrado como usuario para aplicar '
+              'el test, intenta con otro correo';
+        } else if (userData == false) {
+          context.read<UserModel>().errorCode = 'No existen datos del usuario';
+          context.read<UserModel>().errorMessage = 'El usuario que '
+              'ingresaste no tiene datos registrados.';
           Routes.showScreen(context, 'continue-register');
         }
       }
@@ -115,5 +101,48 @@ class LoginController extends BaseController {
   /// [recoverPassword] - Función que recupera la contraseña del usuario
   Future<void> recoverPassword(BuildContext context, String email) async {
     await authService.recoverPassword(email);
+  }
+
+  /// [handleResetPasswordLink] - Método para manejar el enlace de
+  /// restablecimiento de contraseña proporcionado por Firebase.
+  /// Maneja el enlace de restablecimiento de contraseña proporcionado
+  /// por Firebase y llama a un método para restablecer la contraseña del usuario.
+  Future<void> handleResetPasswordLink({
+    required String resetPasswordLink,
+    required String email,
+    required String newPassword,
+  }) async {
+    final oobCode =
+        authService.getOobCodeFromResetPasswordLink(resetPasswordLink);
+    if (oobCode != null) {
+      // Aquí puedes llamar al método para restablecer la contraseña
+      await resetPassword(email, oobCode, newPassword);
+    } else {
+      // Manejar el caso en el que no se pueda obtener el oobCode
+      debugPrint(
+        'No se pudo obtener el código de restablecimiento de contraseña.',
+      );
+    }
+  }
+
+  /// [resetPassword] - Método para restablecer la contraseña del usuario
+  /// utilizando el enlace proporcionado por Firebase.
+  Future<void> resetPassword(
+    String email,
+    String oobCode,
+    String newPassword,
+  ) async {
+    try {
+      // Confirmar el restablecimiento de contraseña utilizando el código de
+      // restablecimiento y la nueva contraseña
+      await FirebaseAuth.instance.confirmPasswordReset(
+        code: oobCode,
+        newPassword: newPassword,
+      );
+    } catch (e) {
+      // Manejar cualquier error que pueda ocurrir al restablecer la contraseña
+      debugPrint('Error al restablecer contraseña: $e');
+      rethrow;
+    }
   }
 }
