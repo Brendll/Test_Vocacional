@@ -6,33 +6,32 @@ import 'package:flutter_test_vocacional_1/src/views/util/color/colores.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginLayouts extends StatelessWidget {
-  LoginLayouts({super.key});
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController nameController = TextEditingController();
+  const LoginLayouts({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.maxFinite,
       height: double.maxFinite,
       child: FlutterLogin(
-        userType: LoginUserType.email,
-        onLogin: (p0) {
-          LoginController().signInWithEmailAndPassword(
+        //hideForgotPasswordButton: true,
+
+        onLogin: (p0) async {
+          await LoginController().signInWithEmailAndPassword(
             context: context,
             email: p0.name,
             password: p0.password,
           );
           return null;
         },
-        onSignup: (p0) {
-          LoginController()
+        onSignup: (p0) async {
+          await LoginController()
               .signUpWithEmailAndPassword(context, p0.name!, p0.password!);
           return null;
         },
         //onSubmitAnimationCompleted: () => Routes.showScreen(context, 'test'),
-        onRecoverPassword: (p0) {
-          LoginController().recoverPassword(context, p0);
+        onRecoverPassword: (p0) async {
+          await LoginController().recoverPassword(context, p0);
           return null;
         },
         logoTag: 'CBTis 61',
@@ -109,7 +108,8 @@ class LoginLayouts extends StatelessWidget {
           goBackButton: 'Regresar',
           confirmPasswordError: '¡Las contraseñas no coinciden!',
           recoverPasswordDescription:
-              'Para recuperar tu contraseña, ingresa tu correo electrónico y te enviaremos un enlace para cambiarla',
+              'Para recuperar tu contraseña, ingresa tu correo electrónico y '
+              'te enviaremos un enlace para cambiarla',
           recoverPasswordSuccess: 'Contraseña recuperada exitosamente',
         ),
       ),

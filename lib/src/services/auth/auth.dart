@@ -7,6 +7,15 @@ import 'package:flutter_test_vocacional_1/src/models/user/user_model.dart';
 /// [AuthService] - Clase que maneja la autenticación del usuario.
 /// Utiliza FirebaseAuth para interactuar con Firebase Authentication.
 class AuthService with ChangeNotifier {
+  // Definición de factor de creacion de instancia
+  factory AuthService() {
+    _instancia._auth.authStateChanges().listen(_instancia._onAuthStateChanged);
+    return _instancia;
+  }
+
+  /// Constructor privado
+  AuthService._private();
+
   ///NOTE: Evaluamos el estado del usuario mediante esta clase. Ademas que aqui declaramos todo lo que ocuparemos en las otras clases
 
   /// FIREBASEUSER [firebaseUser] - Mediante una instancia a la clase User,
@@ -27,17 +36,8 @@ class AuthService with ChangeNotifier {
   /// STATUS [_status] - Devuelve el estado en el que esta el usuario.
   late AuthStatus _status = AuthStatus.Uninitialized;
 
-  /// Constructor privado
-  AuthService._private();
-
   // Definición de instancia privada
   static final AuthService _instancia = AuthService._private();
-
-  // Definición de factor de creacion de instancia
-  factory AuthService() {
-    _instancia._auth.authStateChanges().listen(_instancia._onAuthStateChanged);
-    return _instancia;
-  }
 
   /// Constructor de [AuthService] que inicia la escucha de los cambios de estado
   ///  de autenticación.
@@ -61,7 +61,9 @@ class AuthService with ChangeNotifier {
   /// [signInWithEmailAndPassword] - Método para iniciar sesión con correo electrónico y contraseña.
   /// Actualiza el estado de autenticación y notifica a los oyentes sobre el cambio de estado.
   Future<User?> signInWithEmailAndPassword(
-      String email, String password) async {
+    String email,
+    String password,
+  ) async {
     _status = AuthStatus.Authenticating;
     notifyListeners();
     try {
@@ -71,6 +73,7 @@ class AuthService with ChangeNotifier {
       );
 
       final user = authResult.user!;
+      _status = AuthStatus.Authenticated;
       notifyListeners();
       return user;
     } catch (e) {
@@ -161,7 +164,9 @@ class AuthService with ChangeNotifier {
   /// [signUpWithEmailAndPassword] - Método para registrarse con correo electrónico y contraseña.
   /// Actualiza el estado de autenticación y notifica a los oyentes sobre el cambio de estado.
   Future<User?> signUpWithEmailAndPassword(
-      String email, String password) async {
+    String email,
+    String password,
+  ) async {
     _status = AuthStatus.Authenticating;
     notifyListeners();
     try {
@@ -196,8 +201,9 @@ class AuthService with ChangeNotifier {
     } catch (e) {
       // Manejar cualquier error que pueda ocurrir al enviar el correo electrónico
       debugPrint(
-          'Error al enviar correo electrónico de recuperación de contraseña: $e');
-      throw e;
+        'Error al enviar correo electrónico de recuperación de contraseña: $e',
+      );
+      rethrow;
     }
   }
 
@@ -225,10 +231,13 @@ class AuthService with ChangeNotifier {
   /// Se utiliza después de un inicio de sesión exitoso para almacenar información relevante del usuario.
   Future<DocumentSnapshot> updateUserData(User user) async {
     final DocumentReference userRef = _db.collection('TestUser').doc(user.uid);
-    userRef.set({
-      'lastSign': DateTime.now(),
-      //'photoURL': user.photoURL,
-    }, SetOptions(merge: true));
+    await userRef.set(
+      {
+        'lastSign': DateTime.now(),
+        //'photoURL': user.photoURL,
+      },
+      SetOptions(merge: true),
+    );
     final userData = await userRef.get();
     return userData;
   }

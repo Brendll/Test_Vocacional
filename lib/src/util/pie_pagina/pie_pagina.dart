@@ -1,10 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test_vocacional_1/src/views/home/layouts/home_layout.dart';
 
+/// [PiePagina] es el Widget que representa el pie de página de la
+/// aplicación con información del desarrollador
 class PiePagina extends StatelessWidget {
+  /// [PiePagina] es el constructor de la clase PiePagina
   const PiePagina({super.key});
 
   @override
@@ -26,9 +29,10 @@ class PiePagina extends StatelessWidget {
             TextSpan(
               text: ' Ver licencias del software',
               style: TextStyle(
-                  color: Colors.blue.shade900,
-                  decorationStyle: TextDecorationStyle.dotted,
-                  fontSize: 8),
+                color: Colors.blue.shade900,
+                decorationStyle: TextDecorationStyle.dotted,
+                fontSize: 8,
+              ),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
                   showDialog(
@@ -38,12 +42,13 @@ class PiePagina extends StatelessWidget {
                       applicationVersion: 'Versión: 1.0.0',
                       applicationIcon: Icon(Icons.credit_card),
                       applicationLegalese:
-                          '© 2024 Brenda Luna Luna. Todos los derechos reservados.',
+                          '© 2024 Brenda Luna Luna. Todos los derechos '
+                          'reservados.',
                       children: [
                         SizedBox(height: 100),
                         Text('Esta aplicación es de uso libre.'),
                         SizedBox(height: 10),
-                        Text('El test Fue hecho por: ')
+                        Text('El test Fue hecho por: '),
                       ],
                     ),
                   );

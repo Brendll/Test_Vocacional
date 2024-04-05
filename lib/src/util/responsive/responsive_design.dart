@@ -55,8 +55,8 @@ class ResponsiveDesign with ChangeNotifier {
       screenType = ScreenType.mobile;
       // Print a debug message with the current screen type
       debugPrint(
-        'El tipo de pantalla es: $screenType, pero recordar que es para' +
-            ' la version de Tablets y Mobiles',
+        'El tipo de pantalla es: $screenType, pero recordar que es para'
+        ' la version de Tablets y Mobiles',
       );
     }
     notifyListeners();

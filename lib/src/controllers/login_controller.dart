@@ -37,19 +37,26 @@ class LoginController extends BaseController {
         context.read<UserModel>().error = false;
         context.read<UserModel>().errorCode = '';
         context.read<UserModel>().errorMessage = '';
+        debugPrint('Login success');
         Routes.showScreen(context, 'test');
+        return true;
       } else {
-        context.read<UserModel>().error = true;
         if (userExists == false) {
+          context.read<UserModel>().error = true;
           context.read<UserModel>().errorCode = 'No existe el usuario';
           context.read<UserModel>().errorMessage = 'El usuario que '
               'ingresaste no esta registrado como usuario para aplicar '
               'el test, intenta con otro correo';
+          debugPrint('Login error: No existe el usuario');
+          return false;
         } else if (userData == false) {
+          context.read<UserModel>().status = UserModelStatus.Error;
           context.read<UserModel>().errorCode = 'No existen datos del usuario';
           context.read<UserModel>().errorMessage = 'El usuario que '
               'ingresaste no tiene datos registrados.';
+          debugPrint('Login error: No existen datos del usuario');
           Routes.showScreen(context, 'continue-register');
+          return false;
         }
       }
     } catch (e) {
@@ -58,6 +65,8 @@ class LoginController extends BaseController {
       context.read<UserModel>().error = true;
       context.read<UserModel>().errorCode = 'Error al iniciar sesión';
       context.read<UserModel>().errorMessage = 'Error al iniciar sesión: $e';
+      debugPrint('Login error: $e');
+      return false;
     }
     return true;
   }

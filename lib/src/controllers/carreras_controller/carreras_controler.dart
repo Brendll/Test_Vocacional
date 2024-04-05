@@ -1,11 +1,13 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test_vocacional_1/src/controllers/base_controller.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_test_vocacional_1/src/models/carreers/carreras_model.dart';
 import 'package:provider/provider.dart';
 
+/// CarrerasController es una clase que extiende de BaseController
+///
 class CarrerasController extends BaseController {
   Future<void> getImagenesCarreras(BuildContext context) async {
     BaseController bc = BaseController();

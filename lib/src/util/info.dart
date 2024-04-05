@@ -22,7 +22,7 @@ class InfoAplication {
     'I',
     'J',
     'K',
-    'L'
+    'L',
   ];
 
   final String nameDeveloper = 'T.S.U. Erick González Cortes';

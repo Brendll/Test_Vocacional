@@ -11,35 +11,16 @@ import 'package:flutter_test_vocacional_1/src/views/util/build_widget_screen_typ
 import 'package:flutter_test_vocacional_1/src/views/util/color/colores.dart';
 import 'package:provider/provider.dart';
 
-class LoginView extends StatelessWidget {
-  LoginView({super.key});
+class LoginView extends StatefulWidget {
+  LoginView({Key? key}) : super(key: key);
 
   @override
+  _LoginViewState createState() => _LoginViewState();
+}
+
+class _LoginViewState extends State<LoginView> {
+  @override
   Widget build(BuildContext context) {
-    if (context.read<ResponsiveDesign>().isMobileAndTablet(context)) {
-      //Mobile & Tablet
-      context.read<ViewMenu>().widgetDrawer = const Drawer();
-      context.read<ViewMenu>().widgetBar = const Row(
-        children: [
-          Expanded(flex: 3, child: SizedBox(child: TitleComponent())),
-        ],
-      );
-    } else {
-      //Desktop
-      context.read<ViewMenu>().widgetBar = const Row(
-        children: [
-          Expanded(flex: 3, child: SizedBox(child: TitleComponent())),
-          Expanded(
-            flex: 7,
-            child: SizedBox(child: NavigationBarMenu()),
-          )
-        ],
-      );
-      context.read<ViewMenu>().widgetDrawer = null;
-    }
-    if (context.watch<UserModel>().error) {
-      showError(context);
-    }
     return Scaffold(
       drawer: context.watch<ViewMenu>().widgetDrawer,
       backgroundColor: Colores.colorTealFuerte,
@@ -48,14 +29,24 @@ class LoginView extends StatelessWidget {
         centerTitle: true,
         elevation: 3,
       ),
-      body: LoginLayouts(),
+      body: const LoginLayouts(),
     );
   }
 
-  /// Función para mostrar un diálogo
-  void showError(BuildContext context) {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (context.watch<UserModel>().error) {
+      // Llama a showError solo si hay un error en el UserModel
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await showError(context);
+      });
+    }
+  }
+
+  Future<void> showError(BuildContext context) async {
     // Mostrar el diálogo
-    showDialog(
+    await showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         // Devolver el widget del diálogo

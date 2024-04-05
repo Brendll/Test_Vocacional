@@ -1,9 +1,10 @@
 class Images {
-  static final Images _instance = Images._internal();
+  Images._internal();
 
   factory Images() {
     return _instance;
   }
+  static final Images _instance = Images._internal();
 
   List<String> _imagesSwiper = [
     "assets/images/programacion.jpeg",
@@ -14,6 +15,4 @@ class Images {
   ];
 
   List<String> get imagesSwiper => _imagesSwiper;
-
-  Images._internal();
 }

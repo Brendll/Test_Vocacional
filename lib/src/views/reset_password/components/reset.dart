@@ -4,11 +4,11 @@ import 'package:flutter_test_vocacional_1/src/controllers/login_controller.dart'
 import 'package:flutter_test_vocacional_1/src/routes/router.dart';
 
 class Reset extends StatefulWidget {
-  final String resetPasswordLink;
   const Reset({
-    Key? key,
     required this.resetPasswordLink,
-  }) : super(key: key);
+    super.key,
+  });
+  final String resetPasswordLink;
 
   @override
   _ResetState createState() => _ResetState();
@@ -23,15 +23,15 @@ class _ResetState extends State<Reset> {
     super.dispose();
   }
 
-  void _submitNewPassword() async {
+  Future<void> _submitNewPassword() async {
     // Implementa la lógica para enviar la nueva contraseña aquí
     final newPassword = _controller.text;
     final resetPasswordLink =
         widget.resetPasswordLink; // Obtener el enlace del widget padre
 
     // Extraer el correo electrónico del enlace
-    RegExp emailRegex = RegExp(r'resetPassword\/(.*?)\/');
-    String email = emailRegex.firstMatch(resetPasswordLink)?.group(1) ?? '';
+    final emailRegex = RegExp(r'resetPassword\/(.*?)\/');
+    final email = emailRegex.firstMatch(resetPasswordLink)?.group(1) ?? '';
 
     await LoginController()
         .handleResetPasswordLink(

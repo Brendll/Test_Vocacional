@@ -19,7 +19,7 @@ class TitleComponent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AutoSizeText(
-              "Test",
+              'Test',
               style: TextStyle(
                 fontFamily: GoogleFonts.castoro().fontFamily,
                 color: Colors.black,
@@ -33,7 +33,7 @@ class TitleComponent extends StatelessWidget {
               width: 3,
             ),
             AutoSizeText(
-              "Vocacional",
+              'Vocacional',
               style: TextStyle(
                 fontFamily: GoogleFonts.castoro().fontFamily,
                 color: Colors.black,
@@ -50,7 +50,7 @@ class TitleComponent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 AutoSizeText(
-                  "C.B.T.I.S 61",
+                  'C.B.T.I.S 61',
                   style: TextStyle(
                     fontFamily: GoogleFonts.castoro().fontFamily,
                     color: Colors.black,

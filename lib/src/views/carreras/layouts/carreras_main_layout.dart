@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CarrerasMainLayout extends StatelessWidget {
-  const CarrerasMainLayout({Key? key}) : super(key: key);
+  const CarrerasMainLayout({super.key});
 
   @override
   Widget build(BuildContext context) {

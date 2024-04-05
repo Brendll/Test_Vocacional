@@ -9,62 +9,65 @@ class TitleComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      child: Row(children: [
-        const Icon(
-          CupertinoIcons.doc_text_search,
-          color: Colors.black,
-        ),
-        const SizedBox(width: 10), // Agrega un espacio entre el logo y el texto
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AutoSizeText(
-              "Test",
-              style: TextStyle(
-                fontFamily: GoogleFonts.castoro().fontFamily,
-                color: Colors.black,
-                fontSize: 24,
-              ),
-              maxLines: 1,
-              maxFontSize: 30,
-              minFontSize: 5,
-            ),
-            const SizedBox(
-              width: 3,
-            ),
-            AutoSizeText(
-              "Vocacional",
-              style: TextStyle(
-                fontFamily: GoogleFonts.castoro().fontFamily,
-                color: Colors.black,
-
-                fontSize: 30,
-                fontWeight: FontWeight.bold, // Agregando negrita
-              ),
-              maxLines: 1,
-              maxFontSize: 40,
-              minFontSize: 6,
-            ),
-            const SizedBox(height: 50),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                AutoSizeText(
-                  "C.B.T.I.S 61",
-                  style: TextStyle(
-                    fontFamily: GoogleFonts.castoro().fontFamily,
-                    color: Colors.black,
-                    fontSize: 18,
-                  ),
-                  maxLines: 1,
-                  maxFontSize: 20,
-                  minFontSize: 3,
+      child: Row(
+        children: [
+          const Icon(
+            CupertinoIcons.doc_text_search,
+            color: Colors.black,
+          ),
+          const SizedBox(
+              width: 10), // Agrega un espacio entre el logo y el texto
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AutoSizeText(
+                "Test",
+                style: TextStyle(
+                  fontFamily: GoogleFonts.castoro().fontFamily,
+                  color: Colors.black,
+                  fontSize: 24,
                 ),
-              ],
-            )
-          ],
-        ),
-      ]),
+                maxLines: 1,
+                maxFontSize: 30,
+                minFontSize: 5,
+              ),
+              const SizedBox(
+                width: 3,
+              ),
+              AutoSizeText(
+                "Vocacional",
+                style: TextStyle(
+                  fontFamily: GoogleFonts.castoro().fontFamily,
+                  color: Colors.black,
+
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold, // Agregando negrita
+                ),
+                maxLines: 1,
+                maxFontSize: 40,
+                minFontSize: 6,
+              ),
+              const SizedBox(height: 50),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  AutoSizeText(
+                    "C.B.T.I.S 61",
+                    style: TextStyle(
+                      fontFamily: GoogleFonts.castoro().fontFamily,
+                      color: Colors.black,
+                      fontSize: 18,
+                    ),
+                    maxLines: 1,
+                    maxFontSize: 20,
+                    minFontSize: 3,
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

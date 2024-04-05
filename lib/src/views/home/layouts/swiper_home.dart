@@ -1,11 +1,8 @@
-import 'package:flutter/material.dart';
-
 //dependencias
 import 'package:card_swiper/card_swiper.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test_vocacional_1/src/controllers/carreras_controller/carreras_controler.dart';
 import 'package:flutter_test_vocacional_1/src/models/carreers/carreras_model.dart';
-import 'package:flutter_test_vocacional_1/src/routes/router.dart';
-
 import 'package:provider/provider.dart';
 
 /// [SwiperHome] es una clase que extiende de [StatelessWidget]

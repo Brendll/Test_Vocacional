@@ -1,4 +1,4 @@
-import 'dart:js' as js;
+//import 'dart:js' as js;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test_vocacional_1/src/services/auth/auth.dart';
@@ -36,10 +36,11 @@ class Routes {
           child2: LoginView(),
           context: _,
         ),
+    // '/recoverpassword' : (_) => const recover(),
     '/login': (_) => LoginView(),
     //'/register': (_) => const RegisterView(),
-    '/continue-register': (_) => ContinueRegisterView(),
-    '/carreras': (_) => CarrerasView(),
+
+    //'/carreras': (_) => CarrerasView(),
     //'reset-password': (_) => const ResetPasswordView(resetPasswordLink: '',),
   };
 
@@ -52,7 +53,7 @@ class Routes {
 
     final uri = Uri.parse(url);
     final queryParameters = uri.queryParameters;
-    String path = uri.path; //'${uri.scheme}://${uri.host}${uri.path}';
+    final path = uri.path; //'${uri.scheme}://${uri.host}${uri.path}';
 
 // Obtener los valores de los parámetros específicos
     final mode = queryParameters['mode'].toString();
@@ -93,6 +94,7 @@ class Routes {
           return _checkAuthAndNavigate(
             ContinueRegisterView(),
           );
+
         case '/carreras':
           // Devuelve una ruta de material con CarrerasView como su constructor
           return MaterialPageRoute(
@@ -163,11 +165,11 @@ class Routes {
         ),
       );
     } else {
-      Navigator.of(context).pushNamed('/$routeName');
       // Actualizar la URL en la barra de direcciones del navegador
       try {
+        //js.context.callMethod('history.replaceState', ['/$routeName']);
         //js.context.callMethod('history.pushState', ['/$routeName']);
-        ///js.context.callMethod('history.replaceState', ['/$routeName']);
+        Navigator.of(context).pushNamed('/$routeName');
       } catch (e) {
         throw Exception(
           'Error al actualizar la URL en la barra de direcciones del '

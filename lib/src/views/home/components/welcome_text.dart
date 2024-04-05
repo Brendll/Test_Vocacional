@@ -6,15 +6,16 @@ import 'package:provider/provider.dart';
 
 ///
 class TextoCuerpo extends StatelessWidget {
-  const TextoCuerpo({super.key, required this.title, required this.texto});
-  final String title;
+  const TextoCuerpo({required this.titlee, required this.texto, super.key});
+  final String titlee;
   final String texto;
   @override
   Widget build(BuildContext context) {
     ResponsiveDesign().initScreen(context);
     final rdc = context.watch<ResponsiveDesign>();
     debugPrint(
-        'screenTypessss ${context.watch<ResponsiveDesign>().screenType}');
+      'screenTypessss ${context.watch<ResponsiveDesign>().screenType}',
+    );
     return Container(
       width: rdc.screenType == ScreenType.desktop ? 800 : 500,
       alignment: Alignment.center,
@@ -22,7 +23,7 @@ class TextoCuerpo extends StatelessWidget {
         children: [
           AutoSizeText(
             textAlign: TextAlign.center,
-            title.toString(),
+            titlee,
             maxLines: 1,
             style: TextStyle(
               fontSize: 25,
@@ -35,7 +36,7 @@ class TextoCuerpo extends StatelessWidget {
           const SizedBox(height: 20),
           AutoSizeText(
             textAlign: TextAlign.center,
-            texto.toString(),
+            texto,
             maxLines: 6,
             style: TextStyle(
               fontSize: 16,

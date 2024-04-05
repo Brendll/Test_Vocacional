@@ -10,11 +10,10 @@ enum UserModelStatus {
 }
 
 class UserModel with ChangeNotifier {
+  UserModel();
   UserModel.instance() {
     //TODO Add code here
   }
-
-  UserModel();
   UserModelStatus _status = UserModelStatus.Ended;
   String _errorCode = '';
   String _errorMessage = '';
@@ -44,6 +43,11 @@ class UserModel with ChangeNotifier {
 
   bool get error => _error;
   // Setters
+
+  set status(UserModelStatus value) {
+    _status = value;
+    notifyListeners();
+  }
 
   set error(bool value) {
     _error = value;

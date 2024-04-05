@@ -12,7 +12,6 @@ import 'package:flutter_test_vocacional_1/src/views/util/color/colores.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-/// TODO: Hacer la documentación
 /// MyApp es la clase principal de la aplicación
 /// La clase MyApp es el punto de entrada de la aplicación
 /// [MyApp] es un StatelessWidget

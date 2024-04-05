@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class TitleTest extends StatelessWidget {
-  const TitleTest({Key? key}) : super(key: key);
+  const TitleTest({super.key});
 
   @override
   Widget build(BuildContext context) {

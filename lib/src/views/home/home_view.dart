@@ -33,8 +33,8 @@ class HomeView extends StatelessWidget {
   /// que se encarga de controlar el desplazamiento de la pantalla
   final ScrollController scrollController = ScrollController();
 
-  /// [listViewKeyHome] - Es una instancia de la clase [GlobalKey] que se encarga
-  /// de TODO el renderizado de la pantalla
+  /// [listViewKeyHome] - Es una instancia de la clase [GlobalKey] que se
+  /// encarga
   final listViewKeyHome = GlobalKey();
 
   @override

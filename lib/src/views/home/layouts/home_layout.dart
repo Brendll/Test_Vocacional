@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_test_vocacional_1/src/routes/router.dart';
 import 'package:flutter_test_vocacional_1/src/util/pie_pagina/pie_pagina.dart';
 
@@ -117,17 +116,17 @@ class HomeLayout extends StatelessWidget {
         const SliverToBoxAdapter(
           child: Center(
             child: TextoCuerpo(
-              title:
-                  'Descubre tus Intereses y Facilidades con Este Test Vocacional',
-              texto:
-                  'En este cuestionario, encontrarás la oportunidad de explorar '
-                  'tus intereses y habilidades de una manera profunda. El propósito '
-                  'es guiarte hacia lo que realmente te apasiona y hacia las '
-                  'actividades que encuentras más fáciles de realizar. Este '
-                  'ejercicio no solo busca ayudarte en la elección de tu camino '
-                  'académico, sino también en la planificación de tu futuro. '
-                  '¡Descubre qué te mueve y qué te impulsa a seguir adelante en '
-                  'tu vida estudiantil!',
+              titlee: 'Descubre tus Intereses y Facilidades con Este Test '
+                  'Vocacional',
+              texto: 'En este cuestionario, encontrarás la oportunidad de '
+                  'explorar tus intereses y habilidades de una manera '
+                  'profunda. El propósito es guiarte hacia lo que realmente '
+                  'te apasiona y hacia las actividades que encuentras más '
+                  'fáciles de realizar. Este ejercicio no solo busca '
+                  'ayudarte en la elección de tu camino académico, sino '
+                  'también en la planificación de tu futuro. ¡Descubre qué '
+                  'te mueve y qué te impulsa a seguir adelante en tu vida '
+                  'estudiantil!',
             ),
           ),
         ),
@@ -139,7 +138,7 @@ class HomeLayout extends StatelessWidget {
         const SliverToBoxAdapter(
           child: Center(
             child: TextoCuerpo(
-              title: 'Iniciar Test de Orientación Vocacional',
+              titlee: 'Iniciar Test de Orientación Vocacional',
               texto: 'Haz clic en el botón de abajo para comenzar el Test de '
                   'Orientación Vocacional',
             ),
