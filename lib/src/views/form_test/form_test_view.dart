@@ -18,6 +18,8 @@ class FormTestView extends StatelessWidget {
   @override
   @override
   Widget build(BuildContext context) {
+    ResponsiveDesign rd = ResponsiveDesign();
+    rd.initScreen(context);
     return Scaffold(
       drawer: context.watch<ViewMenu>().widgetDrawer,
       appBar: AppBar(
@@ -34,7 +36,7 @@ class FormTestView extends StatelessWidget {
         child: Center(
           child: SizedBox(
             height: 400,
-            width: 300,
+            width: 600,
             child: FormTestLayout(),
           ),
         ),
