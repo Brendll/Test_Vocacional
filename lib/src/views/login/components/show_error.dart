@@ -28,7 +28,7 @@ Future<void> showError(
               // Cerrar el diálogo
               Navigator.of(context).pop();
               // Verificar si navegar es una función válida antes de llamarla
-              navegar?.call();
+              navegar.call();
             },
             child: const Text('Cerrar'),
           ),

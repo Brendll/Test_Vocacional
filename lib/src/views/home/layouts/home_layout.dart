@@ -63,10 +63,15 @@ import 'package:provider/provider.dart';
 /// )
 /// ```
 
-class HomeLayout extends StatelessWidget {
+class HomeLayout extends StatefulWidget {
   /// [HomeLayout] - Es el constructor de la clase
   HomeLayout({super.key});
 
+  @override
+  State<HomeLayout> createState() => _HomeLayoutState();
+}
+
+class _HomeLayoutState extends State<HomeLayout> {
   /// [rd] es una instancia de la clase ResponsiveDesign
   /// ```dart
   /// ResponsiveDesign rd  = ResponsiveDesign();
@@ -80,14 +85,21 @@ class HomeLayout extends StatelessWidget {
   /// [listViewKeyHome] - Es una instancia de la clase [GlobalKey] que se
   // encarga de `TODO` el renderizado de la pantalla
   final listViewKeyHome = GlobalKey();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<ResponsiveDesign>().initScreen(context);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    context.read<ResponsiveDesign>().initScreen(context);
-    final rdc = context.watch<ResponsiveDesign>();
     return CustomScrollView(
       controller: scrollController,
       slivers: <Widget>[
-        const SliverToBoxAdapter(
+        SliverToBoxAdapter(
           child: Dgti(),
         ),
         SliverAppBar(

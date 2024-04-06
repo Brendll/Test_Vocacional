@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_test_vocacional_1/src/controllers/base_controller.dart';
+import 'package:flutter_test_vocacional_1/src/controllers/base_controller.dart'
+    as controller;
 import 'package:flutter_test_vocacional_1/src/controllers/login_controller.dart';
 import 'package:flutter_test_vocacional_1/src/models/user/user_model.dart';
 import 'package:flutter_test_vocacional_1/src/routes/router.dart';
@@ -33,6 +34,8 @@ class _ContinueRegisterViewState extends State<ContinueRegisterView> {
   // Agrega una clave de formulario
   @override
   Widget build(BuildContext context) {
+    controller.init(context);
+
     context.read<ResponsiveDesign>().initScreen(context);
     debugPrint(
       'El estado de autenticación es ${context.watch<AuthService>().status}',
@@ -54,7 +57,7 @@ class _ContinueRegisterViewState extends State<ContinueRegisterView> {
         () => showError(
           context,
           navegar: () {
-            context.watch<UserModel>().status = UserModelStatus.Ended;
+            context.read<UserModel>().status = UserModelStatus.Ended;
             context.read<UserModel>().error = false;
             //Navigator.canPop(context);
           },

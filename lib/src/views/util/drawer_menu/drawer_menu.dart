@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_test_vocacional_1/src/controllers/login_controller.dart';
 import 'package:flutter_test_vocacional_1/src/routes/router.dart';
 import 'package:flutter_test_vocacional_1/src/util/responsive/responsive_design.dart';
 import 'package:flutter_test_vocacional_1/src/views/util/color/colores.dart';
@@ -21,19 +22,23 @@ class DrawerMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       elevation: 3,
       width: rd.isMobile(context)
-          ? rd.mobileExtraLarge * .74
+          ? rd.mobileSmall * .74
           : rd.isTablet(context)
-              ? rd.tabletExtraLarge * .5
+              ? rd.tabletExtraLarge * .4
               : 0,
       child: SingleChildScrollView(
         child: ColoredBox(
-          color: Colores.colorFondoDrawer,
+          color: const Color.fromARGB(255, 255, 255, 255),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               const DrawerHeader(
                 margin: EdgeInsets.zero,
+                padding: EdgeInsets.all(40),
                 duration: Duration(seconds: 1),
                 curve: Easing.emphasizedDecelerate,
                 decoration: BoxDecoration(
@@ -47,6 +52,33 @@ class DrawerMenu extends StatelessWidget {
                 leading: const Icon(Icons.home),
                 onTap: () => Routes.showScreen(context, ''),
                 style: ListTileStyle.drawer,
+              ),
+              ListTile(
+                title: const Text('Iniciar Test'),
+                leading: const Icon(Icons.text_snippet),
+                onTap: () => Routes.showScreen(context, 'test'),
+                style: ListTileStyle.drawer,
+              ),
+              ListTile(
+                title: const Text('Acerca de'),
+                leading: const Icon(Icons.info),
+                onTap: () => Routes.showScreen(context, 'about'),
+                style: ListTileStyle.drawer,
+              ),
+              Routes.buildAuthenticatedScreen(
+                child1: ListTile(
+                  title: const Text('Cerrar sesión'),
+                  leading: const Icon(Icons.exit_to_app),
+                  onTap: () => LoginController().signOut(context),
+                  style: ListTileStyle.drawer,
+                ),
+                context: context,
+                child2: ListTile(
+                  title: const Text('Iniciar sesión'),
+                  leading: const Icon(Icons.login),
+                  onTap: () => Routes.showScreen(context, 'login'),
+                  style: ListTileStyle.drawer,
+                ),
               ),
             ],
           ),

@@ -2,10 +2,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_test_vocacional_1/src/controllers/continue_register/continue_register.dart';
+import 'package:flutter_test_vocacional_1/src/controllers/continue_register_controller/continue_register_controller.dart';
 import 'package:flutter_test_vocacional_1/src/util/responsive/responsive_design.dart';
 import 'package:flutter_test_vocacional_1/src/views/continue_register/components/birthday.dart';
-import 'package:flutter_test_vocacional_1/src/views/continue_register/components/email_field.dart';
+import 'package:flutter_test_vocacional_1/src/views/continue_register/components/curp.dart';
 import 'package:flutter_test_vocacional_1/src/views/continue_register/components/last_name_m.dart';
 import 'package:flutter_test_vocacional_1/src/views/continue_register/components/last_name_p.dart';
 import 'package:flutter_test_vocacional_1/src/views/continue_register/components/name_field.dart';
@@ -89,10 +89,11 @@ class ContinueRegisterLayout extends StatelessWidget {
                                 // padding: const EdgeInsets.all(20),
                                 children: [
                                   // EmailField(),
-                                  NameField(),
+                                  Expanded(child: NameField()),
                                   Expanded(child: LastNameP()),
                                   Expanded(child: LastNameM()),
-                                  Birthday(),
+                                  Expanded(child: Curp()),
+                                  Expanded(child: Birthday()),
                                 ],
                               ),
                               const SizedBox(
@@ -121,6 +122,8 @@ class ContinueRegisterLayout extends StatelessWidget {
                                     // lógica de envío aquí Por ejemplo, puedes
                                     // guardar los datos del formulario en una
                                     // base de datos.
+                                    await Future<void>.delayed(Duration.zero);
+
                                     await ContinueRegisterController()
                                         .dataCompleteUser(context);
                                   }

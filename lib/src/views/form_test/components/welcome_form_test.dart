@@ -7,6 +7,9 @@ class WelcomeFormTest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisSize: MainAxisSize.min,
+      textBaseline: TextBaseline.alphabetic,
       children: <Widget>[
         AutoSizeText(
           'BIENVENIDOS',

@@ -66,12 +66,11 @@ class Routes {
     debugPrint('ApiKey: $apiKey');
     debugPrint('Lang: $lang');
 
-    debugPrint('Reset Password: $uri'
-        '/name: ${settings.name}'
-        '\n\n/reset-password/path: $path');
     if (path == '/reset-password') {
-      debugPrint('Reset Password: $queryParameters'
-          '/name: ${settings.name}');
+      debugPrint('Reset Password: $uri'
+          '/name: ${settings.name}'
+          '\n\n/reset-password/path: $path');
+
       return MaterialPageRoute(
         builder: (_) => ResetPasswordView(
           resetPasswordLink: settings.name.toString(),
@@ -146,9 +145,10 @@ class Routes {
     BuildContext context,
     String routeName,
   ) {
+    debugPrint('Route: $routeName');
     if (routeName == '/login') {
       Navigator.of(context).push(
-        PageRouteBuilder(
+        PageRouteBuilder<SlideTransition>(
           pageBuilder: (context, animation, secondaryAnimation) => LoginView(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             const begin = Offset(31, -3);
@@ -169,6 +169,7 @@ class Routes {
       try {
         //js.context.callMethod('history.replaceState', ['/$routeName']);
         //js.context.callMethod('history.pushState', ['/$routeName']);
+
         Navigator.of(context).pushNamed('/$routeName');
       } catch (e) {
         throw Exception(

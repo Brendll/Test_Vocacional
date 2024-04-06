@@ -227,14 +227,17 @@ class ResponsiveDesign with ChangeNotifier {
   void initScreen(BuildContext context) {
     if (context.read<ResponsiveDesign>().isMobileAndTablet(context)) {
       //Mobile & Tablet
+      debugPrint('Mobile & Tablet');
       context.read<ViewMenu>().widgetDrawer = DrawerMenu();
       if (MediaQuery.of(context).size.width < mobileLarge) {
         //mobileLarge
+        debugPrint('mobileLarge');
         context.read<ResponsiveDesign>().screenType = ScreenType.mobile;
 
         context.read<ViewMenu>().widgetBar = Container();
       } else {
         //Tablet
+        debugPrint('Tablet');
         context.read<ResponsiveDesign>().screenType = ScreenType.tablet;
 
         context.read<ViewMenu>().widgetBar = const Row(
@@ -245,6 +248,7 @@ class ResponsiveDesign with ChangeNotifier {
       }
     } else {
       //Desktop
+      debugPrint('Desktop');
       context.read<ResponsiveDesign>().screenType = ScreenType.desktop;
 
       context.read<ViewMenu>().widgetBar = const Row(

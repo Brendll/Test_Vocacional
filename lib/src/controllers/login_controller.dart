@@ -20,7 +20,7 @@ class LoginController extends BaseController {
   /// the email and password.
   /// Returns a [Future<bool>] indicating whether the sign in was successful or
   /// not.
-  Future<bool> signInWithEmailAndPassword({
+  Future<void> signInWithEmailAndPassword({
     required BuildContext context,
     required String email,
     required String password,
@@ -38,8 +38,8 @@ class LoginController extends BaseController {
         context.read<UserModel>().errorCode = '';
         context.read<UserModel>().errorMessage = '';
         debugPrint('Login success');
-        Routes.showScreen(context, 'test');
-        return true;
+
+        Navigator.canPop(context) ? Navigator.pop(context) : null;
       } else {
         if (userExists == false) {
           context.read<UserModel>().error = true;
@@ -48,15 +48,13 @@ class LoginController extends BaseController {
               'ingresaste no esta registrado como usuario para aplicar '
               'el test, intenta con otro correo';
           debugPrint('Login error: No existe el usuario');
-          return false;
         } else if (userData == false) {
           context.read<UserModel>().status = UserModelStatus.Error;
           context.read<UserModel>().errorCode = 'No existen datos del usuario';
           context.read<UserModel>().errorMessage = 'El usuario que '
               'ingresaste no tiene datos registrados.';
           debugPrint('Login error: No existen datos del usuario');
-          Routes.showScreen(context, 'continue-register');
-          return false;
+          Navigator.canPop(context) ? Navigator.pop(context) : null;
         }
       }
     } catch (e) {
@@ -66,9 +64,7 @@ class LoginController extends BaseController {
       context.read<UserModel>().errorCode = 'Error al iniciar sesión';
       context.read<UserModel>().errorMessage = 'Error al iniciar sesión: $e';
       debugPrint('Login error: $e');
-      return false;
     }
-    return true;
   }
 
   /// [signUpWithEmailAndPassword] crea un nuevo usuario en la base de datos y

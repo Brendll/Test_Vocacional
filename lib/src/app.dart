@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
             ),
             initialRoute: Routes.initialRoute,
             onGenerateRoute: Routes.generateRoute,
-            routes: Routes.routes,
+            //routes: Routes.routes,
           );
         },
       ),

@@ -39,7 +39,8 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    rd.initScreen(context);
+    context.read<ResponsiveDesign>().initScreen(context);
+
     return Scaffold(
       drawer: context.watch<ViewMenu>().widgetDrawer,
       body: HomeLayout(),

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:flutter_test_vocacional_1/src/controllers/login_controller.dart';
+import 'package:flutter_test_vocacional_1/src/routes/router.dart';
 import 'package:flutter_test_vocacional_1/src/views/util/color/colores.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -18,12 +19,14 @@ class LoginLayouts extends StatelessWidget {
 
         onLogin: (p0) async {
           await LoginController().signInWithEmailAndPassword(
-            context: context,
             email: p0.name,
             password: p0.password,
+            context: context,
           );
+
           return null;
         },
+
         onSignup: (p0) async {
           await LoginController()
               .signUpWithEmailAndPassword(context, p0.name!, p0.password!);

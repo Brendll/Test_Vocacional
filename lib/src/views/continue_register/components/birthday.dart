@@ -4,7 +4,7 @@ import 'package:flutter_test_vocacional_1/src/views/util/color/colores.dart';
 import 'package:provider/provider.dart';
 
 class Birthday extends StatefulWidget {
-  const Birthday({Key? key}) : super(key: key);
+  const Birthday({super.key});
 
   @override
   _BirthdayState createState() => _BirthdayState();
@@ -23,6 +23,7 @@ class _BirthdayState extends State<Birthday> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      key: widget.key,
       onTap: () {
         _selectDate(context);
       },

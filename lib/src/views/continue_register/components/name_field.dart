@@ -9,6 +9,8 @@ class NameField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      key: key,
+
       // Ejemplo de un campo de entrada de texto
       decoration: const InputDecoration(
         counterStyle: TextStyle(

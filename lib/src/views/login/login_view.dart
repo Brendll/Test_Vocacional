@@ -33,17 +33,6 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (context.watch<UserModel>().error) {
-      // Llama a showError solo si hay un error en el UserModel
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        await showError(context);
-      });
-    }
-  }
-
   Future<void> showError(BuildContext context) async {
     // Mostrar el diálogo
     await showDialog<void>(

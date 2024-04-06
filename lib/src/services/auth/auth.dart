@@ -74,6 +74,7 @@ class AuthService with ChangeNotifier {
 
       final user = authResult.user!;
       _status = AuthStatus.Authenticated;
+
       notifyListeners();
       return user;
     } catch (e) {
