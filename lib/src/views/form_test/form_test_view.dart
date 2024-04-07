@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_test_vocacional_1/src/routes/router.dart';
+import 'package:flutter_test_vocacional_1/src/models/form_test/form_test_model.dart';
+
 import 'package:flutter_test_vocacional_1/src/util/responsive/responsive_design.dart';
 import 'package:flutter_test_vocacional_1/src/views/form_test/layouts/form_test_layout.dart';
-import 'package:flutter_test_vocacional_1/src/views/login/login_view.dart';
 import 'package:flutter_test_vocacional_1/src/views/util/Bar/title_bar.dart';
 import 'package:flutter_test_vocacional_1/src/views/util/build_widget_screen_type/build_widget_screen_type.dart';
 import 'package:flutter_test_vocacional_1/src/views/util/color/colores.dart';
@@ -20,24 +20,28 @@ class FormTestView extends StatelessWidget {
   Widget build(BuildContext context) {
     ResponsiveDesign rd = ResponsiveDesign();
     rd.initScreen(context);
-    return Scaffold(
-      drawer: context.watch<ViewMenu>().widgetDrawer,
-      appBar: AppBar(
-        toolbarHeight: 60,
-        backgroundColor: Colores.colorAppBar,
-        title: TitleBar(),
-        centerTitle: true,
-        elevation: 1,
-        actionsIconTheme: const IconThemeData(
-          color: Colors.black,
+    return ChangeNotifierProvider(
+      create: (context) => FormTestModel(), // Instancia del modelo
+
+      child: Scaffold(
+        drawer: context.watch<ViewMenu>().widgetDrawer,
+        appBar: AppBar(
+          toolbarHeight: 60,
+          backgroundColor: Colores.colorAppBar,
+          title: TitleBar(),
+          centerTitle: true,
+          elevation: 1,
+          actionsIconTheme: const IconThemeData(
+            color: Colors.black,
+          ),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: SizedBox(
-            height: 400,
-            width: 600,
-            child: FormTestLayout(),
+        body: SingleChildScrollView(
+          child: Center(
+            child: SizedBox(
+              height: 600,
+              width: 650,
+              child: FormTestLayout(),
+            ),
           ),
         ),
       ),
