@@ -90,7 +90,9 @@ class _HomeLayoutState extends State<HomeLayout> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<ResponsiveDesign>().initScreen(context);
+      if (mounted) {
+        context.read<ResponsiveDesign>().initScreen(context);
+      }
     });
   }
 

@@ -32,100 +32,104 @@ class instructions_form_test1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      children: <Widget>[
-        AutoSizeText(
-          'INSTRUCCIONES',
-          style: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
+    return const Center(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          AutoSizeText(
+            'INSTRUCCIONES',
+            style: TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
+            maxLines: 1,
+            textAlign: TextAlign.center,
+            maxFontSize: 25,
+            minFontSize: 12,
           ),
-          maxLines: 1,
-          textAlign: TextAlign.center,
-          maxFontSize: 25,
-          minFontSize: 12,
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AutoSizeText(
-              '• Contesta el cuestionario tomando en cuenta lo '
-              'siguiente:',
-              maxLines: 2,
-              maxFontSize: 12,
-              minFontSize: 6,
-            ),
-            AutoSizeText(
-              '• El Interés es el gusto que tienes por realizar una actividad, '
-              'la disposición y motivación que tienes hacia ella, el placer que '
-              'experimentas al ejecutarla y el tiempo que le dedicas.',
-              maxLines: 4,
-              maxFontSize: 12,
-              minFontSize: 6,
-            ),
-            AutoSizeText(
-              '• Es importante que respondas con sinceridad y reflexiones sobre '
-              'que tanto ¿Qué tanto me gustaría…? ó ¿Me veo realizando esta '
-              'actividad?',
-              maxLines: 4,
-              maxFontSize: 12,
-              minFontSize: 6,
-            ),
-            AutoSizeText(
-              '• Dicho cuestionario debe ser realizado en un solo momento sin '
-              'interrupciones.',
-              maxLines: 2,
-              maxFontSize: 12,
-              minFontSize: 6,
-            ),
-            AutoSizeText(
-              '• No hay respuestas correctas o incorrectas.',
-              maxLines: 2,
-              maxFontSize: 12,
-              minFontSize: 6,
-            ),
-            AutoSizeText(
-              'Lee cada pregunta y contesta con un tache en cada fila conforme '
-              'a la siguiente escala:',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AutoSizeText(
+                '• Contesta el cuestionario tomando en cuenta lo '
+                'siguiente:',
+                maxLines: 2,
+                maxFontSize: 12,
+                minFontSize: 6,
               ),
-              maxLines: 3,
-              maxFontSize: 12,
-              minFontSize: 6,
-            ),
-            AutoSizeText(
-              '4- “Me gusta mucho'
-              '\n3- “Me gusta algo o en parte”'
-              '\n2- “Me es indiferente, ni me gusta ni me disgusta”'
-              '\n1- “Me desagrada algo o en parte”'
-              '\n0- “Me desagrada mucho o totalmente”',
-              maxLines: 6,
-              maxFontSize: 12,
-              minFontSize: 6,
-            ),
-            AutoSizeText(
-              'Cada respuesta equivale a un puntaje, siendo el mínimo 0 y el '
-              'máximo 24 puntos.',
-              maxLines: 3,
-              maxFontSize: 12,
-              minFontSize: 6,
-            ),
-            AutoSizeText(
-              'Al final de cada hoja, sumaras el puntaje de cada fila y lo '
-              'anotaras para después compararlo en la escala de puntajes.',
-              style: TextStyle(
-                fontWeight: FontWeight.w100,
-                fontStyle: FontStyle.italic,
+              AutoSizeText(
+                '• El Interés es el gusto que tienes por realizar una actividad, '
+                'la disposición y motivación que tienes hacia ella, el placer que '
+                'experimentas al ejecutarla y el tiempo que le dedicas.',
+                maxLines: 4,
+                maxFontSize: 12,
+                minFontSize: 6,
               ),
-              maxLines: 3,
-              maxFontSize: 8,
-              minFontSize: 4,
-            ),
-          ],
-        ),
-      ],
+              AutoSizeText(
+                '• Es importante que respondas con sinceridad y reflexiones sobre '
+                'que tanto ¿Qué tanto me gustaría…? ó ¿Me veo realizando esta '
+                'actividad?',
+                maxLines: 4,
+                maxFontSize: 12,
+                minFontSize: 6,
+              ),
+              AutoSizeText(
+                '• Dicho cuestionario debe ser realizado en un solo momento sin '
+                'interrupciones.',
+                maxLines: 2,
+                maxFontSize: 12,
+                minFontSize: 6,
+              ),
+              AutoSizeText(
+                '• No hay respuestas correctas o incorrectas.',
+                maxLines: 2,
+                maxFontSize: 12,
+                minFontSize: 6,
+              ),
+              AutoSizeText(
+                'Lee cada pregunta y contesta con un tache en cada fila conforme '
+                'a la siguiente escala:',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+                maxLines: 3,
+                maxFontSize: 12,
+                minFontSize: 6,
+              ),
+              AutoSizeText(
+                '4- “Me gusta mucho'
+                '\n3- “Me gusta algo o en parte”'
+                '\n2- “Me es indiferente, ni me gusta ni me disgusta”'
+                '\n1- “Me desagrada algo o en parte”'
+                '\n0- “Me desagrada mucho o totalmente”',
+                maxLines: 6,
+                maxFontSize: 12,
+                minFontSize: 6,
+              ),
+              AutoSizeText(
+                'Cada respuesta equivale a un puntaje, siendo el mínimo 0 y el '
+                'máximo 24 puntos.',
+                maxLines: 3,
+                maxFontSize: 12,
+                minFontSize: 6,
+              ),
+              AutoSizeText(
+                'Al final de cada hoja, sumaras el puntaje de cada fila y lo '
+                'anotaras para después compararlo en la escala de puntajes.',
+                style: TextStyle(
+                  fontWeight: FontWeight.w100,
+                  fontStyle: FontStyle.italic,
+                ),
+                maxLines: 3,
+                maxFontSize: 8,
+                minFontSize: 4,
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

@@ -32,93 +32,97 @@ class instructions_form_test2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      children: <Widget>[
-        AutoSizeText(
-          'INSTRUCCIONES',
-          style: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
+    return const Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          AutoSizeText(
+            'INSTRUCCIONES',
+            style: TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
+            maxLines: 1,
+            textAlign: TextAlign.center,
+            maxFontSize: 25,
+            minFontSize: 12,
           ),
-          maxLines: 1,
-          textAlign: TextAlign.center,
-          maxFontSize: 25,
-          minFontSize: 12,
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AutoSizeText(
-              '1. Ahora realizaremos el test de aptitudes.',
-              maxLines: 2,
-              maxFontSize: 12,
-              minFontSize: 6,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            AutoSizeText(
-              '• Contesta el cuestionario tomando en cuenta lo '
-              'siguiente:',
-              maxLines: 2,
-              maxFontSize: 12,
-              minFontSize: 6,
-            ),
-            AutoSizeText(
-              '''
-¡Recuerda que una aptitud es la capacidad o habilidad que posees o puedes adquirir para desempeñarte en una determinada actividad!
-
-Considera que no se te pregunta si la actividad te gusta o no, sino qué tan apto te consideras para desempeñar cada una de ellas.
-
-Es importante que contestes con sinceridad y reflexiones sobre ¿Qué tan apto te consideras para…?
-
-Dicho cuestionario debes realizarlo en un solo momento sin interrupciones.
-
-No hay respuestas correctas o incorrectas.''',
-              maxLines: 4,
-              maxFontSize: 12,
-              minFontSize: 6,
-            ),
-            AutoSizeText(
-              'Lee cada pregunta y contesta con un tache en cada fila conforme '
-              'a la siguiente escala:',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AutoSizeText(
+                '1. Ahora realizaremos el test de aptitudes.',
+                maxLines: 2,
+                maxFontSize: 12,
+                minFontSize: 6,
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              maxLines: 3,
-              maxFontSize: 12,
-              minFontSize: 6,
-            ),
-            AutoSizeText(
-              '4- “Considero ser muy competente”'
-              '\n3- “Considero ser competente”'
-              '\n2- “Considero ser medianamente competente”'
-              '\n1- “Considero ser muy poco competente”'
-              '\n0- “Considero ser incompetente”',
-              maxLines: 6,
-              maxFontSize: 12,
-              minFontSize: 6,
-            ),
-            AutoSizeText(
-              'Cada respuesta equivale a un puntaje, siendo el mínimo 0 y el '
-              'máximo 24 puntos.',
-              maxLines: 3,
-              maxFontSize: 12,
-              minFontSize: 6,
-            ),
-            AutoSizeText(
-              'Al final de cada hoja, sumaras el puntaje de cada fila y lo '
-              'anotaras para después compararlo en la escala de puntajes.',
-              style: TextStyle(
-                fontWeight: FontWeight.w100,
-                fontStyle: FontStyle.italic,
+              AutoSizeText(
+                '• Contesta el cuestionario tomando en cuenta lo '
+                'siguiente:',
+                maxLines: 2,
+                maxFontSize: 12,
+                minFontSize: 6,
               ),
-              maxLines: 3,
-              maxFontSize: 8,
-              minFontSize: 4,
-            ),
-          ],
-        ),
-      ],
+              AutoSizeText(
+                '''
+      ¡Recuerda que una aptitud es la capacidad o habilidad que posees o puedes adquirir para desempeñarte en una determinada actividad!
+      
+      Considera que no se te pregunta si la actividad te gusta o no, sino qué tan apto te consideras para desempeñar cada una de ellas.
+      
+      Es importante que contestes con sinceridad y reflexiones sobre ¿Qué tan apto te consideras para…?
+      
+      Dicho cuestionario debes realizarlo en un solo momento sin interrupciones.
+      
+      No hay respuestas correctas o incorrectas.''',
+                maxLines: 4,
+                maxFontSize: 12,
+                minFontSize: 6,
+              ),
+              AutoSizeText(
+                'Lee cada pregunta y contesta con un tache en cada fila conforme '
+                'a la siguiente escala:',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+                maxLines: 3,
+                maxFontSize: 12,
+                minFontSize: 6,
+              ),
+              AutoSizeText(
+                '4- “Considero ser muy competente”'
+                '\n3- “Considero ser competente”'
+                '\n2- “Considero ser medianamente competente”'
+                '\n1- “Considero ser muy poco competente”'
+                '\n0- “Considero ser incompetente”',
+                maxLines: 6,
+                maxFontSize: 12,
+                minFontSize: 6,
+              ),
+              AutoSizeText(
+                'Cada respuesta equivale a un puntaje, siendo el mínimo 0 y el '
+                'máximo 24 puntos.',
+                maxLines: 3,
+                maxFontSize: 12,
+                minFontSize: 6,
+              ),
+              AutoSizeText(
+                'Al final de cada hoja, sumaras el puntaje de cada fila y lo '
+                'anotaras para después compararlo en la escala de puntajes.',
+                style: TextStyle(
+                  fontWeight: FontWeight.w100,
+                  fontStyle: FontStyle.italic,
+                ),
+                maxLines: 3,
+                maxFontSize: 8,
+                minFontSize: 4,
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

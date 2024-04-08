@@ -4,9 +4,9 @@ import 'package:flutter_test_vocacional_1/src/models/form_test/form_test_model.d
 import 'package:provider/provider.dart';
 
 /// Tabla de preguntas del formTest
-class TableFormTest extends StatelessWidget {
+class TableFormTest extends StatefulWidget {
   /// constructor de la tabla
-  TableFormTest({
+  const TableFormTest({
     required this.posicionDelTema,
     required this.posicionDeForm,
     required this.titleTable,
@@ -104,651 +104,233 @@ class TableFormTest extends StatelessWidget {
   final String pregunta5;
   final String pregunta6;
 
-  int selectedValue = -1; // valor seleccionado por defecto
+  @override
+  State<TableFormTest> createState() => _TableFormTestState();
+}
+
+class _TableFormTestState extends State<TableFormTest> {
+  late List<int> _groupValues;
+  @override
+  void initState() {
+    super.initState();
+    // Inicializar el estado de los grupos para cada fila
+    _groupValues =
+        List.generate(6, (index) => -1); // Se ajusta según el número de filas
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Table(
-      border: TableBorder.all(),
+    //Lista de respuestas
+    final List<String> respuestas = [
+      widget.respuesta0,
+      widget.respuesta1,
+      widget.respuesta2,
+      widget.respuesta3,
+      widget.respuesta4,
+    ];
+
+    //Lista de preguntas
+    final List<String> preguntas = [
+      widget.pregunta1,
+      widget.pregunta2,
+      widget.pregunta3,
+      widget.pregunta4,
+      widget.pregunta5,
+      widget.pregunta6,
+    ];
+
+    // Posicion de preguntas
+    final List<int> posicionesPreguntas = [
+      widget.posicionDePregunta1,
+      widget.posicionDePregunta2,
+      widget.posicionDePregunta3,
+      widget.posicionDePregunta4,
+      widget.posicionDePregunta5,
+      widget.posicionDePregunta6,
+    ];
+
+    // Dibujo del widget tabla
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        // Titulo de la tabla
-        TableRow(
-          children: [
-            TableCell(
-              child: Center(
-                child: AutoSizeText(
-                  titleTable,
-                  maxLines: 4,
-                  maxFontSize: 20,
-                ),
-              ),
-            ),
-          ],
+        Center(
+          child: AutoSizeText(
+            textAlign: TextAlign.center,
+            widget.titleTable,
+            maxLines: 4,
+            maxFontSize: 20,
+          ),
         ),
-
-        // Encabezado 2
-        TableRow(
+        Table(
+          border: TableBorder.all(),
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
           children: [
-            // Encabezado ``Pregunta`` para listado de pregunta
-            const TableCell(
-              child: Center(
-                child: AutoSizeText(
-                  'Pregunta',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
+            ///Segunda fila
 
-            // Encabezado ``Pregunta``
-            TableCell(
-              child: Center(
-                child: AutoSizeText(
-                  preguntaEncabezado,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-
-            // Encabezado divido den tipo de respuestas y puntaje
-            Table(
-              border: TableBorder.all(),
+            // Encabezado 2
+            TableRow(
               children: [
-                // Encabezado ``respuestas``
-                TableRow(
-                  children: [
-                    // Encabezado ``respuesta0``
-                    TableCell(
-                      child: Center(
-                        child: AutoSizeText(
-                          respuesta0,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
+                // Encabezado ``Pregunta`` para listado de pregunta
+                const TableCell(
+                  child: Center(
+                    child: AutoSizeText(
+                      'Pregunta',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                      minFontSize: 4,
+                      maxLines: 1,
+                      maxFontSize: 12,
                     ),
-
-                    // Encabezado ``respuesta1``
-                    TableCell(
-                      child: Center(
-                        child: AutoSizeText(
-                          respuesta1,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-
-                    // Encabezado ``respuesta2``
-                    TableCell(
-                      child: Center(
-                        child: AutoSizeText(
-                          respuesta2,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-
-                    // Encabezado ``respuesta3``
-                    TableCell(
-                      child: Center(
-                        child: AutoSizeText(
-                          respuesta3,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-
-                    // Encabezado ``respuesta4``
-                    TableCell(
-                      child: Center(
-                        child: AutoSizeText(
-                          respuesta4,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
 
-                // Encabezado ``puntaje``
-                const TableRow(
-                  children: [
-                    TableCell(child: Center(child: AutoSizeText('0 Puntos'))),
-                    TableCell(child: Center(child: AutoSizeText('1 puntos'))),
-                    TableCell(child: Center(child: AutoSizeText('2 puntos'))),
-                    TableCell(child: Center(child: AutoSizeText('3 puntos'))),
-                    TableCell(child: Center(child: AutoSizeText('4 puntos'))),
-                  ],
+                // Encabezado ``Pregunta``
+                TableCell(
+                  child: Center(
+                    child: AutoSizeText(
+                      widget.preguntaEncabezado,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      minFontSize: 4,
+                      maxLines: 6,
+                      maxFontSize: 12,
+                    ),
+                  ),
                 ),
+
+                // Encabezado divido den tipo de respuestas y puntaje
+                for (int i = 0; i < respuestas.length; i++)
+                  TableCell(
+                    child: Expanded(
+                      child: Table(
+                        border: TableBorder.all(),
+                        children: [
+                          // Encabezado ``respuestas``
+                          TableRow(
+                            children: [
+                              // Encabezado ``respuestas``
+                              TableCell(
+                                child: Center(
+                                  child: AutoSizeText(
+                                    respuestas[i],
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    minFontSize: 3,
+                                    maxLines: 6,
+                                    maxFontSize: 12,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          // Encabezado ``puntaje``
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Center(
+                                  child: AutoSizeText(
+                                    '$i Puntos',
+                                    minFontSize: 3,
+                                    maxLines: 2,
+                                    maxFontSize: 12,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
               ],
             ),
-          ],
-        ),
 
-        // Pregunta1
-        TableRow(
-          children: [
-            const TableCell(child: Center(child: AutoSizeText('1'))),
-            TableCell(child: Center(child: AutoSizeText(pregunta1))),
-
-            // Radio puntos 0
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 0,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta1],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta1] = value!;
-                  },
-                ),
+            // Preguntas y respuestas
+            for (int i = 0; i < 6; i++)
+              TableRow(
+                children: [
+                  TableCell(
+                    child: Center(
+                      child: AutoSizeText(
+                        '${i + 1}',
+                        minFontSize: 3,
+                        maxFontSize: 14,
+                      ),
+                    ),
+                  ),
+                  TableCell(
+                    child: Center(
+                      child: AutoSizeText(
+                        preguntas[i],
+                        maxFontSize: 12,
+                        minFontSize: 2,
+                        maxLines: 8,
+                      ),
+                    ),
+                  ),
+                  for (int j = 0; j < respuestas.length; j++)
+                    TableCell(
+                      child: Column(
+                        children: [
+                          AutoSizeText(
+                            'i:$i j:$j',
+                            maxLines: 1,
+                            minFontSize: 1,
+                            maxFontSize: 9,
+                          ),
+                          Radio(
+                            value: j,
+                            groupValue: context
+                                        .watch<FormTestModel>() //
+                                        .respuestas[widget.posicionDelTema] //
+                                    [widget.posicionDeForm] //
+                                [posicionesPreguntas[i]],
+                            onChanged: (value) => onChangedRadio(
+                              value!,
+                              posicionesPreguntas,
+                              i,
+                              j,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                ],
               ),
-            ),
-
-            // Radio puntos 1
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 1,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta1],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta1] = value!;
-                  },
-                ),
-              ),
-            ),
-
-            // Radio puntos 2
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 2,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta1],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta1] = value!;
-                  },
-                ),
-              ),
-            ),
-
-            // Radio puntos 3
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 3,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta1],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta1] = value!;
-                  },
-                ),
-              ),
-            ),
-
-            // Radio puntos 4
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 4,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta1],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta1] = value!;
-                  },
-                ),
-              ),
-            ),
-          ],
-        ),
-
-        // Pregunta2
-        TableRow(
-          children: [
-            const TableCell(child: Center(child: AutoSizeText('2'))),
-            TableCell(child: Center(child: AutoSizeText(pregunta2))),
-
-            // Radio puntos 0
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 0,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta2],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta2] = value!;
-                  },
-                ),
-              ),
-            ),
-
-            // Radio puntos 1
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 1,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta2],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta2] = value!;
-                  },
-                ),
-              ),
-            ),
-
-            // Radio puntos 2
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 2,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta2],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta2] = value!;
-                  },
-                ),
-              ),
-            ),
-
-            // Radio puntos 3
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 3,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta3],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta3] = value!;
-                  },
-                ),
-              ),
-            ),
-
-            // Radio puntos 4
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 4,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta4],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta4] = value!;
-                  },
-                ),
-              ),
-            ),
-          ],
-        ),
-
-        // Pregunta3
-        TableRow(
-          children: [
-            const TableCell(child: Center(child: AutoSizeText('3'))),
-            TableCell(child: Center(child: AutoSizeText(pregunta3))),
-            // Radio puntos 0
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 0,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta3],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta3] = value!;
-                  },
-                ),
-              ),
-            ),
-
-            // Radio puntos 1
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 1,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta3],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta3] = value!;
-                  },
-                ),
-              ),
-            ),
-
-            // Radio puntos 2
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 2,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta4],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta4] = value!;
-                  },
-                ),
-              ),
-            ),
-
-            // Radio puntos 3
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 3,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta4],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta4] = value!;
-                  },
-                ),
-              ),
-            ),
-
-            // Radio puntos 4
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 4,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta4],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta4] = value!;
-                  },
-                ),
-              ),
-            ),
-          ],
-        ),
-
-        // Pregunta4
-        TableRow(
-          children: [
-            const TableCell(child: Center(child: AutoSizeText('4'))),
-            TableCell(child: Center(child: AutoSizeText(pregunta4))),
-            // Radio puntos 0
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 0,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta5],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta5] = value!;
-                  },
-                ),
-              ),
-            ),
-
-            // Radio puntos 1
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 1,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta5],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta5] = value!;
-                  },
-                ),
-              ),
-            ),
-
-            // Radio puntos 2
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 2,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta5],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta5] = value!;
-                  },
-                ),
-              ),
-            ),
-
-            // Radio puntos 3
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 3,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta5],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta5] = value!;
-                  },
-                ),
-              ),
-            ),
-
-            // Radio puntos 4
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 4,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta5],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta5] = value!;
-                  },
-                ),
-              ),
-            ),
-          ],
-        ),
-
-        // Pregunta5
-        TableRow(
-          children: [
-            const TableCell(child: Center(child: AutoSizeText('5'))),
-            TableCell(child: Center(child: AutoSizeText(pregunta5))),
-
-            // Radio puntos 0
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 0,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta5],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta5] = value!;
-                  },
-                ),
-              ),
-            ),
-
-            // Radio puntos 1
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 1,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta5],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta5] = value!;
-                  },
-                ),
-              ),
-            ),
-
-            // Radio puntos 2
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 2,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta5],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta5] = value!;
-                  },
-                ),
-              ),
-            ),
-
-            // Radio puntos 3
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 3,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta5],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta5] = value!;
-                  },
-                ),
-              ),
-            ),
-
-            // Radio puntos 4
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 4,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta5],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta5] = value!;
-                  },
-                ),
-              ),
-            ),
-          ],
-        ),
-
-        // Pregunta6
-        TableRow(
-          children: [
-            const TableCell(child: Center(child: AutoSizeText('6'))),
-            TableCell(child: Center(child: AutoSizeText(pregunta6))),
-
-            // Radio puntos 0
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 0,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta6],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta6] = value!;
-                  },
-                ),
-              ),
-            ),
-
-            // Radio puntos 1
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 1,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta6],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta6] = value!;
-                  },
-                ),
-              ),
-            ),
-
-            // Radio puntos 2
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 2,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta6],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta6] = value!;
-                  },
-                ),
-              ),
-            ),
-
-            // Radio puntos 3
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 3,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta6],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta6] = value!;
-                  },
-                ),
-              ),
-            ),
-
-            // Radio puntos 4
-            TableCell(
-              child: Center(
-                child: Radio(
-                  value: 4,
-                  groupValue:
-                      context.watch<FormTestModel>().respuestas[posicionDelTema]
-                          [posicionDeForm][posicionDePregunta6],
-                  onChanged: (value) {
-                    context.watch<FormTestModel>().respuestas[posicionDelTema]
-                        [posicionDeForm][posicionDePregunta6] = value!;
-                  },
-                ),
-              ),
-            ),
           ],
         ),
       ],
     );
+  }
+
+  void onChangedRadio(int value, List<int> posicionesPreguntas, int i, int j) {
+    // Se actualiza el valor de la respuesta en el modelo
+    context.read<FormTestModel>().respuestas[widget.posicionDelTema]
+        [widget.posicionDeForm][posicionesPreguntas[i]] = value;
+
+    // Se imprime la respuesta de la pregunta en la fila
+    debugPrint('Respuesta: $value');
+
+    // Se imprime la respuesta almacenada en la lista resouestas del model
+    //Ejemplo: Si en la primera fila del del primer form es selecionada
+    //la respuesta 4, entonces, el valor de la respuesta es:
+    //
+    //context.read<FormTestModel>().respuestas[0][0][0]: 4
+
+    //Se imprime la respuesta
+    debugPrint('context.read<FormTestModel>()'
+
+        //Este puede ser  0 o 1, total temas, o sea 2
+        '.respuestas[${widget.posicionDelTema}]'
+        '[${widget.posicionDeForm}]'
+
+        //Este puede ser 0 o 9, total de 10 formularios
+        '[${posicionesPreguntas[i]}]: '
+
+        //Este es el valor de la respuesta
+        '${context.read<FormTestModel>() //
+                        .respuestas //
+                    [widget.posicionDelTema] //
+                [widget.posicionDeForm] //
+            [posicionesPreguntas[i]]}');
   }
 }

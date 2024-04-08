@@ -16,7 +16,6 @@ class FormTestView extends StatelessWidget {
   const FormTestView({super.key});
 
   @override
-  @override
   Widget build(BuildContext context) {
     ResponsiveDesign rd = ResponsiveDesign();
     rd.initScreen(context);
@@ -38,8 +37,16 @@ class FormTestView extends StatelessWidget {
         body: SingleChildScrollView(
           child: Center(
             child: SizedBox(
-              height: 600,
-              width: 650,
+              height: rd.isDesktop(context)
+                  ? 700
+                  : rd.isTablet(context)
+                      ? rd.screenHeight(context) * 0.9
+                      : rd.screenHeight(context) * 1.2,
+              width: rd.isDesktop(context)
+                  ? 700
+                  : rd.isTablet(context)
+                      ? rd.screenWidth(context) * 0.9
+                      : rd.screenWidth(context) * 1,
               child: FormTestLayout(),
             ),
           ),

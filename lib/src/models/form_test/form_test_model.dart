@@ -32,9 +32,9 @@ class FormTestModel extends ChangeNotifier {
     ), // Segundo arreglo con 10 sublistas, cada una con 6 valores -1
   ];
 
-  List<int> _sumaRespuestasFormulario1 = List.generate(10, (_) => 0);
+  List<int> _sumaRespuestasTema1 = List.generate(10, (_) => 0);
 
-  List<int> _sumaRespuestasFormulario2 = List.generate(10, (_) => 0);
+  List<int> _sumaRespuestasTema2 = List.generate(10, (_) => 0);
 
   List<String> _preguntasEncabezadoForm1 = [
     //preguntaEncabezado
@@ -785,17 +785,17 @@ Campo de trabajo 10
 
   FormTestModelStatus get status => _status;
 
-  List<int> get sumaRespuestasFormulario1 => _sumaRespuestasFormulario1;
+  List<int> get sumaRespuestasTema1 => _sumaRespuestasTema1;
 
-  set sumaRespuestasFormulario1(List<int> value) {
-    _sumaRespuestasFormulario1 = value;
+  set sumaRespuestasTema1(List<int> value) {
+    _sumaRespuestasTema1 = value;
     notifyListeners();
   }
 
-  List<int> get sumaRespuestasFormulario2 => _sumaRespuestasFormulario2;
+  List<int> get sumaRespuestasTema2 => _sumaRespuestasTema2;
 
-  set sumaRespuestasFormulario2(List<int> value) {
-    _sumaRespuestasFormulario2 = value;
+  set sumaRespuestasTema2(List<int> value) {
+    _sumaRespuestasTema2 = value;
     notifyListeners();
   }
 
