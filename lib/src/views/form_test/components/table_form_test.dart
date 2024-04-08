@@ -109,13 +109,11 @@ class TableFormTest extends StatefulWidget {
 }
 
 class _TableFormTestState extends State<TableFormTest> {
-  late List<int> _groupValues;
+  late List<int> _groupValues = List.generate(6, (index) => -1);
   @override
   void initState() {
     super.initState();
     // Inicializar el estado de los grupos para cada fila
-    _groupValues =
-        List.generate(6, (index) => -1); // Se ajusta según el número de filas
   }
 
   @override
@@ -278,12 +276,8 @@ class _TableFormTestState extends State<TableFormTest> {
                             maxFontSize: 9,
                           ),
                           Radio(
-                            value: j,
-                            groupValue: context
-                                        .watch<FormTestModel>() //
-                                        .respuestas[widget.posicionDelTema] //
-                                    [widget.posicionDeForm] //
-                                [posicionesPreguntas[i]],
+                            value: j, //Valor por columna
+                            groupValue: _groupValues[i], //Grupo por fila
                             onChanged: (value) => onChangedRadio(
                               value!,
                               posicionesPreguntas,
@@ -304,33 +298,36 @@ class _TableFormTestState extends State<TableFormTest> {
 
   void onChangedRadio(int value, List<int> posicionesPreguntas, int i, int j) {
     // Se actualiza el valor de la respuesta en el modelo
-    context.read<FormTestModel>().respuestas[widget.posicionDelTema]
-        [widget.posicionDeForm][posicionesPreguntas[i]] = value;
+    setState(() {
+      _groupValues[i] = value;
+      context.read<FormTestModel>().respuestas[widget.posicionDelTema]
+          [widget.posicionDeForm][posicionesPreguntas[i]] = value;
 
-    // Se imprime la respuesta de la pregunta en la fila
-    debugPrint('Respuesta: $value');
+      // Se imprime la respuesta de la pregunta en la fila
+      debugPrint('Respuesta: $value');
 
-    // Se imprime la respuesta almacenada en la lista resouestas del model
-    //Ejemplo: Si en la primera fila del del primer form es selecionada
-    //la respuesta 4, entonces, el valor de la respuesta es:
-    //
-    //context.read<FormTestModel>().respuestas[0][0][0]: 4
+      // Se imprime la respuesta almacenada en la lista resouestas del model
+      //Ejemplo: Si en la primera fila del del primer form es selecionada
+      //la respuesta 4, entonces, el valor de la respuesta es:
+      //
+      //context.read<FormTestModel>().respuestas[0][0][0]: 4
 
-    //Se imprime la respuesta
-    debugPrint('context.read<FormTestModel>()'
+      //Se imprime la respuesta
+      debugPrint('context.read<FormTestModel>()'
 
-        //Este puede ser  0 o 1, total temas, o sea 2
-        '.respuestas[${widget.posicionDelTema}]'
-        '[${widget.posicionDeForm}]'
+          //Este puede ser  0 o 1, total temas, o sea 2
+          '.respuestas[${widget.posicionDelTema}]'
+          '[${widget.posicionDeForm}]'
 
-        //Este puede ser 0 o 9, total de 10 formularios
-        '[${posicionesPreguntas[i]}]: '
+          //Este puede ser 0 o 9, total de 10 formularios
+          '[${posicionesPreguntas[i]}]: '
 
-        //Este es el valor de la respuesta
-        '${context.read<FormTestModel>() //
-                        .respuestas //
-                    [widget.posicionDelTema] //
-                [widget.posicionDeForm] //
-            [posicionesPreguntas[i]]}');
+          //Este es el valor de la respuesta
+          '${context.read<FormTestModel>() //
+                          .respuestas //
+                      [widget.posicionDelTema] //
+                  [widget.posicionDeForm] //
+              [posicionesPreguntas[i]]}');
+    });
   }
 }

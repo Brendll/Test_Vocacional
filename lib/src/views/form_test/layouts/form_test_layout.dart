@@ -139,8 +139,8 @@ class _FormTestLayoutState extends State<FormTestLayout> {
                           if (_currentPage > 0) {
                             _pageController.previousPage(
                               duration: const Duration(milliseconds: 500),
-                              //curve: Curves.ease,
-                              curve: Curves.easeInOutQuint,
+                              curve: Curves.ease,
+                              // curve: Curves.easeInOutQuint,
                             );
                           }
                         },
@@ -164,8 +164,8 @@ class _FormTestLayoutState extends State<FormTestLayout> {
                           if (_currentPage < pages.length) {
                             _pageController.nextPage(
                               duration: const Duration(milliseconds: 500),
-                              // curve: Curves.ease,
-                              curve: Curves.easeInOutQuint,
+                              curve: Curves.ease,
+                              // curve: Curves.easeInOutQuint,
                             );
                           }
                         },
